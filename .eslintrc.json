@@ -38,6 +38,9 @@
         "import/extensions": [
             0,
             "always"
+        ],
+        "brace-style": [
+            "error", "stroustrup"
         ]
     }
 }

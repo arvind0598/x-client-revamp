@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "message": "Fetched data successfully",
+  "data": [
+    "table1",
+    "table2",
+    "table3"
+  ]
+}

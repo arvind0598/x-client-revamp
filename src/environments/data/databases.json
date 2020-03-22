@@ -1,0 +1,8 @@
+{
+  "success": true,
+  "message": "Fetched data successfully",
+  "data": [
+    "database1",
+    "database2"
+  ]
+}
