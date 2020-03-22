@@ -38,3 +38,8 @@ export const apiDatabaseChoose = (name: string): ApiDatabaseChooseAction => ({
   type: API_DATABASE_CHOOSE,
   name,
 });
+
+export type ApiDatabaseAction = ApiDatabaseFetchStartAction
+| ApiDatabaseFetchSuccessAction
+| ApiDatabaseFetchErrorAction
+| ApiDatabaseChooseAction;
