@@ -44,7 +44,7 @@ const mapStateToProps = ({ datasourceData }: StoreType): StoreProps => ({
   datasources: datasourceData.datasources,
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
   clickHandler: (name: string): void => {
     if (name !== '') dispatch(apiDatabaseChoose(name));
   },

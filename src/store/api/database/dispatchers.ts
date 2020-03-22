@@ -42,7 +42,7 @@ export const apiDatabaseChoose = (name: string): ApiDatabaseChooseAction => ({
 });
 
 
-export const apiDatabaseFetch = () => (dispatch) => {
+export const apiDatabaseFetch = () => (dispatch: Function): void => {
   dispatch(apiDatabaseFetchStart());
   fetchSources()
     .then((response: DatabasesResponse) => {
