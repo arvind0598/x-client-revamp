@@ -1,25 +1,25 @@
 const BASE_URL = 'http://localhost:8081';
 
-export const getDatasourceRoute = () => (
+export const getDatasourceRoute = (): string => (
   `${BASE_URL}/sources`
 );
 
-export const getEntitiesRoute = (datasource: string) => (
+export const getEntitiesRoute = (datasource: string): string => (
   `${BASE_URL}/${datasource}/tables`
 );
 
-export const getFieldsRoute = (entity: string) => (
+export const getFieldsRoute = (entity: string): string => (
   `${BASE_URL}/tables/${entity}`
 );
 
-export const getRelationshipsRoute = (datasource: string) => (
+export const getRelationshipsRoute = (datasource: string): string => (
   `${BASE_URL}/${datasource}/relations`
 );
 
-export const getApiRoute = () => (
+export const getApiRoute = (): string => (
   `${BASE_URL}/generate`
 );
 
-export const getCreatedRoute = (uuid: string) => (
+export const getCreatedRoute = (uuid: string): string => (
   `${BASE_URL}/api/${uuid}`
 );

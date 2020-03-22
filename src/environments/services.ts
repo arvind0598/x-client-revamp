@@ -12,7 +12,7 @@ const fetchData = (route: string): Promise<unknown> => (
   fetch(route).then((data) => data.json() as unknown)
 );
 
-const resolveIfDev = (response: unknown) => new Promise(
+const resolveIfDev = (response: unknown): Promise<unknown> => new Promise(
   (resolve, reject) => {
     if (currentMode === 'DEV') {
       resolve(response);
