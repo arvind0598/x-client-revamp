@@ -23,6 +23,21 @@
         "react",
         "@typescript-eslint"
     ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".ts",
+                    ".tsx",
+                    ".json"
+                ]
+            }
+        }
+    },
     "rules": {
+        "import/extensions": [
+            0,
+            "always"
+        ]
     }
 }
