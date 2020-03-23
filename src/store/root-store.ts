@@ -7,6 +7,7 @@ import apiStore from './api/default-store';
 
 const defaultStore: StoreType = {
   datasourceData: apiStore.datasourceData,
+  entitiesData: apiStore.entitiesData,
 };
 
 const middlewares = [

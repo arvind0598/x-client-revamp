@@ -41,7 +41,6 @@ export const apiDatabaseChoose = (name: string): ApiDatabaseChooseAction => ({
   name,
 });
 
-
 export const apiDatabaseFetch = () => (dispatch: Function): void => {
   dispatch(apiDatabaseFetchStart());
   fetchSources()

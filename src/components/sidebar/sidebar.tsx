@@ -1,10 +1,12 @@
 import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import { StoreType } from '../../models/app/store';
-import { apiDatabaseChoose } from '../../store/api/database/dispatchers';
+import { apiEntitiesFetchAfterChoose } from '../../store/api/entities/dispatchers';
+import { LoadStatus } from '../../models/utils/utils';
 
 type StoreProps = {
   datasources: string[];
+  entitiesLoadStatus: LoadStatus;
 };
 
 type DispatchProps = {
@@ -40,13 +42,14 @@ const SidebarComponent = ({ datasources, clickHandler }: Props): ReactElement =>
   );
 };
 
-const mapStateToProps = ({ datasourceData }: StoreType): StoreProps => ({
+const mapStateToProps = ({ datasourceData, entitiesData }: StoreType): StoreProps => ({
   datasources: datasourceData.datasources,
+  entitiesLoadStatus: entitiesData.entitiesLoadStatus,
 });
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
   clickHandler: (name: string): void => {
-    if (name !== '') dispatch(apiDatabaseChoose(name));
+    if (name !== '') dispatch(apiEntitiesFetchAfterChoose(name));
   },
 });
 
