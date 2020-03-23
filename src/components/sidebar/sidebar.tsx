@@ -3,10 +3,13 @@ import { connect } from 'react-redux';
 import { StoreType } from '../../models/app/store';
 import { apiEntitiesFetchAfterChoose } from '../../store/api/entities/dispatchers';
 import { LoadStatus } from '../../models/utils/utils';
+import Entity from '../entity/entity';
 
 type StoreProps = {
   datasources: string[];
+  entityNames: string[];
   entitiesLoadStatus: LoadStatus;
+  entitiesLoadMessage: string;
 };
 
 type DispatchProps = {
@@ -19,12 +22,40 @@ const createOption = (option: string, index: number): ReactElement => (
   <option key={index} value={option}>{ option }</option>
 );
 
-const SidebarComponent = ({ datasources, clickHandler }: Props): ReactElement => {
+const SidebarComponent = ({
+  datasources,
+  entityNames,
+  entitiesLoadStatus,
+  entitiesLoadMessage,
+  clickHandler,
+}: Props): ReactElement => {
   const [datasource, setDatasource] = useState('');
 
   const changeHandler = (event: React.ChangeEvent<HTMLSelectElement>): void => {
     const selectedSource = event.target.value;
     setDatasource(selectedSource);
+  };
+
+  const renderEntities = (names: string[]): ReactElement[] => (
+    names.map((name) => (
+      <Entity name={name} key={name} />
+    ))
+  );
+
+  const renderChildren = (status: LoadStatus, names: string[], message: string): ReactElement => {
+    if (status === 'SUCCESS') {
+      return (
+        <div>
+          { renderEntities(names) }
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <p>{ message }</p>
+      </div>
+    );
   };
 
   return (
@@ -38,6 +69,9 @@ const SidebarComponent = ({ datasources, clickHandler }: Props): ReactElement =>
         }
       </select>
       <button type="button" onClick={(): void => clickHandler(datasource)}> Fetch </button>
+      {
+        renderChildren(entitiesLoadStatus, entityNames, entitiesLoadMessage)
+      }
     </div>
   );
 };
@@ -45,6 +79,8 @@ const SidebarComponent = ({ datasources, clickHandler }: Props): ReactElement =>
 const mapStateToProps = ({ datasourceData, entitiesData }: StoreType): StoreProps => ({
   datasources: datasourceData.datasources,
   entitiesLoadStatus: entitiesData.entitiesLoadStatus,
+  entitiesLoadMessage: entitiesData.entitiesLoadMessage,
+  entityNames: entitiesData.entities,
 });
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({

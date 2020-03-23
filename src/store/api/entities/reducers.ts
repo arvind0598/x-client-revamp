@@ -27,6 +27,9 @@ const apiEntitiesReducer = (state: EntitiesSliceType = defaultStore, action: Api
         entitiesLoadMessage: error,
       };
     }
+    case 'API_ENTITIES_CLEAR': {
+      return defaultStore;
+    }
     default: {
       return state;
     }
