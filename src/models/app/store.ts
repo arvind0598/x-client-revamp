@@ -1,4 +1,6 @@
 import { LoadStatus } from '../utils/utils';
+import { EntitiesSliceType } from './entities';
+import { FieldsSliceType } from './fields';
 
 export type DatabaseSliceType = {
   datasources: string[];
@@ -7,13 +9,8 @@ export type DatabaseSliceType = {
   activeSource: string;
 }
 
-export type EntitiesSliceType = {
-  entities: string[];
-  entitiesLoadStatus: LoadStatus;
-  entitiesLoadMessage: string;
-};
-
 export type StoreType = {
   datasourceData: DatabaseSliceType;
   entitiesData: EntitiesSliceType;
+  fieldsData: FieldsSliceType;
 };

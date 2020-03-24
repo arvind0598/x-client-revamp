@@ -1,9 +1,11 @@
 import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import { StoreType } from '../../models/app/store';
-import { apiEntitiesFetchAfterChoose } from '../../store/api/entities/dispatchers';
+import { apiEntitiesFetchAfterChoose } from '../../store/api/entities/services';
 import { LoadStatus } from '../../models/utils/utils';
 import Entity from '../entity/entity';
+import { selectEntityNames, selectEntityLoadStatus, selectEntitiesLoadMessage } from '../../selectors/entities';
+import { selectDatasourceNames } from '../../selectors/datasources';
 
 type StoreProps = {
   datasources: string[];
@@ -76,11 +78,11 @@ const SidebarComponent = ({
   );
 };
 
-const mapStateToProps = ({ datasourceData, entitiesData }: StoreType): StoreProps => ({
-  datasources: datasourceData.datasources,
-  entitiesLoadStatus: entitiesData.entitiesLoadStatus,
-  entitiesLoadMessage: entitiesData.entitiesLoadMessage,
-  entityNames: entitiesData.entities,
+const mapStateToProps = (state: StoreType): StoreProps => ({
+  datasources: selectDatasourceNames(state),
+  entitiesLoadStatus: selectEntityLoadStatus(state),
+  entitiesLoadMessage: selectEntitiesLoadMessage(state),
+  entityNames: selectEntityNames(state),
 });
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({

@@ -1,4 +1,4 @@
-import { EntitiesSliceType } from '../../../models/app/store';
+import { EntitiesSliceType } from '../../../models/app/entities';
 import defaultStore from './default-store';
 import { ApiEntitiesAction } from './dispatchers';
 

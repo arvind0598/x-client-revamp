@@ -4,8 +4,6 @@ import {
   API_DATABASE_FETCH_ERROR,
   API_DATABASE_CHOOSE,
 } from './types';
-import { fetchSources } from '../../../environments/services';
-import { DatabasesResponse } from '../../../models/api/databases';
 
 type ApiDatabaseFetchStartAction = {
   type: typeof API_DATABASE_FETCH_START;
@@ -40,18 +38,6 @@ export const apiDatabaseChoose = (name: string): ApiDatabaseChooseAction => ({
   type: API_DATABASE_CHOOSE,
   name,
 });
-
-export const apiDatabaseFetch = () => (dispatch: Function): void => {
-  dispatch(apiDatabaseFetchStart());
-  fetchSources()
-    .then((response: DatabasesResponse) => {
-      if (response.success) {
-        dispatch(apiDatabaseFetchSuccess(response.data));
-      }
-      else throw new Error(response.message);
-    })
-    .catch((error) => dispatch(apiDatabaseFetchError(error)));
-};
 
 export type ApiDatabaseAction = ApiDatabaseFetchStartAction
 | ApiDatabaseFetchSuccessAction

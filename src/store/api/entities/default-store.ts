@@ -1,4 +1,4 @@
-import { EntitiesSliceType } from '../../../models/app/store';
+import { EntitiesSliceType } from '../../../models/app/entities';
 
 const store: EntitiesSliceType = {
   entities: [],
