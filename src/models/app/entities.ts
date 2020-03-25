@@ -3,6 +3,7 @@ import { LoadStatus, ChildType } from '../utils/utils';
 export type Child = {
   type: ChildType;
   name: string;
+  actualParent: string | null;
 };
 
 export type EntityType = {

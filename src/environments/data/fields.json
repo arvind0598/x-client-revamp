@@ -1,0 +1,37 @@
+[
+  {
+    "parent": "emp",
+    "name": "id",
+    "type": "INTEGER"
+  },
+  {
+    "parent": "emp",
+    "name": "name",
+    "type": "VARCHAR"
+  },
+  {
+    "parent": "emp",
+    "name": "deptid",
+    "type": "INTEGER"
+  },
+  {
+    "parent": "dept",
+    "name": "id",
+    "type": "INTEGER"
+  },
+  {
+    "parent": "dept",
+    "name": "name",
+    "type": "VARCHAR"
+  },
+  {
+    "parent": "networks",
+    "name": "id",
+    "type": "INTEGER"
+  },
+  {
+    "parent": "networks",
+    "name": "name",
+    "type": "VARCHAR"
+  }
+]

@@ -2,9 +2,12 @@ import { DatabasesResponse } from '../models/api/databases';
 import * as routes from './routes';
 import { Mode } from '../models/utils/utils';
 import { EntitiesResponse } from '../models/api/entities';
+import { FieldsResponse, FieldResponseModel } from '../models/api/fields';
 
+import baseResponse from './data/base-response.json';
 import databases from './data/databases.json';
 import entities from './data/entities.json';
+import fields from './data/fields.json';
 
 const currentMode: Mode = 'DEV';
 
@@ -33,4 +36,23 @@ export const fetchEntities = (datasource: string): Promise<EntitiesResponse> => 
   resolveIfDev(entities)
     .then((data) => data as EntitiesResponse)
     .catch(() => fetchData(routes.getEntitiesRoute(datasource)) as Promise<EntitiesResponse>)
+);
+
+const getFieldsForEntity = (entity: string): FieldResponseModel[] => (
+  fields
+    .filter((field) => (field.parent === entity))
+    .map(({ name, type }): FieldResponseModel => ({
+      name,
+      type,
+    }))
+);
+
+export const fetchFields = (entity: string): Promise<FieldsResponse> => (
+  resolveIfDev(baseResponse)
+    .then((response) => {
+      const entityFields = getFieldsForEntity(entity);
+      response.data = entityFields;
+      return response as FieldsResponse;
+    })
+    .catch(() => fetchData(routes.getFieldsRoute(entity)) as Promise<FieldsResponse>)
 );
