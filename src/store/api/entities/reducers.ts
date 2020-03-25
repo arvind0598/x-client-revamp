@@ -68,7 +68,7 @@ export const apiFieldsEntityReducer = (state: EntitiesSliceType = defaultStore, 
 
       newEntities[entityIndex] = {
         ...newEntities[entityIndex],
-        children: getChildrenFromFields(action.data),
+        children: getChildrenFromFields(action.entityName, action.data),
         fieldsLoadStatus: 'SUCCESS',
         fieldsLoadMessage: `Loaded fields for ${action.entityName}`,
       };

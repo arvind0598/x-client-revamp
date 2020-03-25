@@ -33,7 +33,7 @@ export const selectFieldsFromChildren = (state: StoreType, entityName: string): 
   const { children } = state.entitiesData.entities[entityIndex];
   const childFields = children.filter((child) => (child.type === 'FIELD')).map((field) => (field.name));
   const fields = state.fieldsData.fields.filter((field) => (
-    field.parentName === entityName && childFields.indexOf(field.name) >= 0
+    field.currentParent === entityName && childFields.indexOf(field.name) >= 0
   ));
   return fields;
 };

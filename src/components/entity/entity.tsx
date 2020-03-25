@@ -6,6 +6,7 @@ import { StoreType } from '../../models/app/store';
 import { selectFieldsFromChildren } from '../../selectors/entities';
 import { selectFieldsLoadStatus, selectFieldsLoadMessage } from '../../selectors/fields';
 import { apiFieldsFetch } from '../../store/api/fields/services';
+import Field from '../field/field';
 
 type StoreProps = {
   fields: FieldType[];
@@ -24,7 +25,13 @@ type DispatchProps = {
 type Props = StoreProps & DispatchProps & OwnProps;
 
 const renderFields = (fields: FieldType[]): ReactElement => (
-  <p>{ JSON.stringify(fields)}</p>
+  <div>
+    {
+      fields.map(({ name, type }) => (
+        <Field name={name} type={type} />
+      ))
+    }
+  </div>
 );
 
 // eslint-disable-next-line max-len

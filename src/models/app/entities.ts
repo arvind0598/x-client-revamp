@@ -4,6 +4,7 @@ export type Child = {
   type: ChildType;
   name: string;
   actualParent: string | null;
+  currentParent: string | null;
 };
 
 export type EntityType = {

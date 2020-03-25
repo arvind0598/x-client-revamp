@@ -1,7 +1,8 @@
 export type FieldType = {
   name: string;
   type: string;
-  parentName: string;
+  currentParent: string;
+  actualParent: string;
 };
 
 export type FieldsSliceType = {

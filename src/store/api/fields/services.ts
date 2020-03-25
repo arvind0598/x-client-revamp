@@ -6,7 +6,8 @@ import { FieldType } from '../../../models/app/fields';
 const makeFields = (responses: FieldResponseModel[], entityName: string): FieldType[] => (
   responses.map((response): FieldType => ({
     ...response,
-    parentName: entityName,
+    actualParent: entityName,
+    currentParent: entityName,
   }))
 );
 
