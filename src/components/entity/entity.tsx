@@ -24,22 +24,24 @@ type DispatchProps = {
 
 type Props = StoreProps & DispatchProps & OwnProps;
 
-const renderFields = (fields: FieldType[]): ReactElement => (
+const createKey = (parentName: string, fieldName: string): string => (`${parentName}.${fieldName}`);
+
+const renderFields = (fields: FieldType[], parentName: string): ReactElement => (
   <div>
     {
       fields.map(({ name, type }) => (
-        <Field name={name} type={type} />
+        <Field name={name} type={type} key={createKey(parentName, name)} />
       ))
     }
   </div>
 );
 
 // eslint-disable-next-line max-len
-const renderChildren = (status: LoadStatus, fields: FieldType[], message: string, clickHandler: Function): ReactElement => {
+const renderChildren = (name: string, status: LoadStatus, fields: FieldType[], message: string, clickHandler: Function): ReactElement => {
   if (status === 'SUCCESS') {
     return (
       <div>
-        { renderFields(fields) }
+        { renderFields(fields, name) }
       </div>
     );
   }
@@ -62,7 +64,7 @@ const EntityComponent = ({
   <div>
     <p>{ name }</p>
     {
-      renderChildren(loadStatus, fields, loadMessage, clickHandler)
+      renderChildren(name, loadStatus, fields, loadMessage, clickHandler)
     }
   </div>
 );
