@@ -1,3 +1,3 @@
-import { BaseResponse } from './BaseResponse';
+import { BaseResponse } from './base-response';
 
 export type DatabasesResponse = BaseResponse<string[]>;

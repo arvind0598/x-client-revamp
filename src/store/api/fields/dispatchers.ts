@@ -15,6 +15,7 @@ type ApiFieldsFetchSuccessAction = {
   entityName: string;
   data: FieldType[];
 }
+// eslint-disable-next-line max-len
 export const apiFieldsFetchSuccess = (entityName: string, data: FieldType[]): ApiFieldsFetchSuccessAction => ({
   type: API_FIELDS_FETCH_SUCCESS,
   entityName,
@@ -22,10 +23,11 @@ export const apiFieldsFetchSuccess = (entityName: string, data: FieldType[]): Ap
 });
 
 type ApiFieldsFetchErrorAction = {
-  type: typeof API_FIELDS_FETCH_ERROR,
+  type: typeof API_FIELDS_FETCH_ERROR;
   entityName: string;
   error: string;
 };
+// eslint-disable-next-line max-len
 export const apiFieldsFetchError = (entityName: string, error: string): ApiFieldsFetchErrorAction => ({
   type: API_FIELDS_FETCH_ERROR,
   entityName,

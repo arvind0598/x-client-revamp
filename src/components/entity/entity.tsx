@@ -27,6 +27,7 @@ const renderFields = (fields: FieldType[]): ReactElement => (
   <p>{ JSON.stringify(fields)}</p>
 );
 
+// eslint-disable-next-line max-len
 const renderChildren = (status: LoadStatus, fields: FieldType[], message: string, clickHandler: Function): ReactElement => {
   if (status === 'SUCCESS') {
     return (
