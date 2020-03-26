@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { StoreType } from '../../models/app/store';
 import { selectEntityNames } from '../../selectors/entities';
+import { Box } from 'grommet';
 
 type StoreProps = {
   entityNames: string[];
@@ -15,10 +16,16 @@ type DispatchProps = {
 type Props = StoreProps & DispatchProps;
 
 const WorkspaceComponent = ({ entityNames }: Props): ReactElement => (
-  <div>
+  <Box
+    background="light-1"
+    direction="row"
+    elevation="xsmall"
+    fill="horizontal"
+    height="medium"
+  >
     <p> Workspace </p>
     <p>{ JSON.stringify(entityNames) }</p>
-  </div>
+  </Box>
 );
 
 const mapStateToProps = (state: StoreType): StoreProps => ({
