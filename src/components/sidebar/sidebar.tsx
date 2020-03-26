@@ -7,12 +7,14 @@ import {
   Text,
 } from 'grommet';
 
+import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
 import { StoreType } from '../../models/app/store';
 import { apiEntitiesFetchAfterChoose } from '../../store/api/entities/services';
 import { LoadStatus } from '../../models/utils/utils';
 import Entity from '../entity/entity';
 import { selectEntityNames, selectEntityLoadStatus, selectEntitiesLoadMessage } from '../../selectors/entities';
 import { selectDatasourceNames } from '../../selectors/datasources';
+import { SIDEBAR_TYPE } from '../../utils/constants';
 
 type StoreProps = {
   datasources: string[];
@@ -44,8 +46,8 @@ const SidebarComponent = ({
   };
 
   const renderEntities = (names: string[]): ReactElement[] => (
-    names.map((name) => (
-      <Entity name={name} key={name} />
+    names.map((name, index) => (
+      <Entity name={name} key={name} index={index} />
     ))
   );
 
@@ -69,30 +71,43 @@ const SidebarComponent = ({
   };
 
   return (
-    <Box
-      fill="horizontal"
-      direction="column"
-      height="medium"
-      align="center"
-      justify="center"
-    >
-      <Select
-        onChange={({ option }): void => changeHandler(option)}
-        emptySearchMessage="There are no databases configured."
-        options={datasources}
-      />
-      <Button
-        primary
-        disabled={!fetchStatus}
-        size="large"
-        label="Fetch"
-        margin="small"
-        onClick={(): void => clickHandler(datasource)}
-      />
+    <Droppable droppableId={SIDEBAR_TYPE}>
       {
-        renderChildren(entitiesLoadStatus, entityNames, entitiesLoadMessage)
+        (provided: DroppableProvided): ReactElement => (
+          <Box
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            fill="horizontal"
+            direction="column"
+            height="medium"
+            align="center"
+            justify="center"
+          >
+            <Select
+              onChange={({ option }): void => changeHandler(option)}
+              emptySearchMessage="There are no databases configured."
+              options={datasources}
+            />
+            <Button
+              primary
+              disabled={!fetchStatus}
+              size="large"
+              label="Fetch"
+              margin="small"
+              onClick={(): void => clickHandler(datasource)}
+            />
+            {
+              renderChildren(entitiesLoadStatus, entityNames, entitiesLoadMessage)
+            }
+            {
+              provided.placeholder
+            }
+          </Box>
+        )
       }
-    </Box>
+
+    </Droppable>
+
   );
 };
 

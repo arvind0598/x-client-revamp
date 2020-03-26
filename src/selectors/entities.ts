@@ -2,6 +2,7 @@ import { StoreType } from '../models/app/store';
 import { EntityType } from '../models/app/entities';
 import { LoadStatus } from '../models/utils/utils';
 import { FieldType } from '../models/app/fields';
+import { WORKSPACE_TYPE } from '../utils/constants';
 
 export const selectEntityLoadStatus = (state: StoreType): LoadStatus => (
   state.entitiesData.entitiesLoadStatus
@@ -37,3 +38,9 @@ export const selectFieldsFromChildren = (state: StoreType, entityName: string): 
   ));
   return fields;
 };
+
+export const getSidebarEntityNames = (state: StoreType): string[] => (
+  state.entitiesData.entities
+    .filter((entity) => (entity.parentName === WORKSPACE_TYPE))
+    .map((entity) => (entity.name))
+);

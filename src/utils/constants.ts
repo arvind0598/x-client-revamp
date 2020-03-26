@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export const SIDEBAR_TYPE = 'SIDEBAR_TYPE';
+export const WORKSPACE_TYPE = 'WORKSPACE_TYPE';

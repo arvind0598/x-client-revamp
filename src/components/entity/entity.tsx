@@ -8,6 +8,7 @@ import { selectFieldsFromChildren } from '../../selectors/entities';
 import { selectFieldsLoadStatus, selectFieldsLoadMessage } from '../../selectors/fields';
 import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
+import { Draggable, DroppableProvided, DraggableProvided } from 'react-beautiful-dnd';
 
 type StoreProps = {
   fields: FieldType[];
@@ -17,6 +18,7 @@ type StoreProps = {
 
 type OwnProps = {
   name: string;
+  index: number;
 };
 
 type DispatchProps = {
@@ -67,26 +69,37 @@ const EntityComponent = ({
   fields,
   loadMessage,
   loadStatus,
+  index,
 }: Props): ReactElement => (
-  <Box
-    background="light-1"
-    elevation="small"
-    margin="small"
-    pad="small"
-    justify="center"
-    align="center"
-  >
-    <Heading
-      level={3}
-      margin="xsmall"
-      textAlign="center"
-    >
-      { name }
-    </Heading>
+  <Draggable draggableId={`DRAG!${name}`} index={index} isDragDisabled={loadStatus !== 'SUCCESS'}>
     {
-      renderChildren(name, loadStatus, fields, loadMessage, clickHandler)
+      (provided: DraggableProvided): ReactElement => (
+        <Box
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          background="light-1"
+          elevation="small"
+          margin="small"
+          pad="small"
+          justify="center"
+          align="center"
+        >
+          <Heading
+            level={3}
+            margin="xsmall"
+            textAlign="center"
+          >
+            { name }
+          </Heading>
+          {
+            renderChildren(name, loadStatus, fields, loadMessage, clickHandler)
+          }
+        </Box>
+      )
     }
-  </Box>
+  </Draggable>
+
 );
 
 const mapStateToProps = (state: StoreType, ownProps: Props): StoreProps => ({
