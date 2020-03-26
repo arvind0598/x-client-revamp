@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
+import { Box, Heading, Text, Button } from 'grommet';
 import { FieldType } from '../../models/app/fields';
 import { LoadStatus } from '../../models/utils/utils';
 import { StoreType } from '../../models/app/store';
@@ -27,30 +28,36 @@ type Props = StoreProps & DispatchProps & OwnProps;
 const createKey = (parentName: string, fieldName: string): string => (`${parentName}.${fieldName}`);
 
 const renderFields = (fields: FieldType[], parentName: string): ReactElement => (
-  <div>
+  <Box
+    direction="row"
+    justify="center"
+    align="center"
+  >
     {
       fields.map(({ name, type }) => (
         <Field name={name} type={type} key={createKey(parentName, name)} />
       ))
     }
-  </div>
+  </Box>
 );
 
 // eslint-disable-next-line max-len
 const renderChildren = (name: string, status: LoadStatus, fields: FieldType[], message: string, clickHandler: Function): ReactElement => {
   if (status === 'SUCCESS') {
-    return (
-      <div>
-        { renderFields(fields, name) }
-      </div>
-    );
+    return renderFields(fields, name);
   }
 
   return (
-    <div>
-      <p>{ message }</p>
-      <button type="button" onClick={(): void => clickHandler()}> Get Fields </button>
-    </div>
+    <>
+      <Text textAlign="center">{ message }</Text>
+      <Button
+        primary
+        size="medium"
+        label="Get Fields"
+        margin="small"
+        onClick={(): void => clickHandler()}
+      />
+    </>
   );
 };
 
@@ -61,12 +68,25 @@ const EntityComponent = ({
   loadMessage,
   loadStatus,
 }: Props): ReactElement => (
-  <div>
-    <p>{ name }</p>
+  <Box
+    background="light-1"
+    elevation="small"
+    margin="small"
+    pad="small"
+    justify="center"
+    align="center"
+  >
+    <Heading
+      level={3}
+      margin="xsmall"
+      textAlign="center"
+    >
+      { name }
+    </Heading>
     {
       renderChildren(name, loadStatus, fields, loadMessage, clickHandler)
     }
-  </div>
+  </Box>
 );
 
 const mapStateToProps = (state: StoreType, ownProps: Props): StoreProps => ({

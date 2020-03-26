@@ -8,8 +8,8 @@ const theme: ThemeType = {
   global: {
     font: {
       family: 'Raleway',
-      size: '1.2em',
-      height: '2em',
+      size: '1em',
+      height: '1.8em',
     },
   },
 };

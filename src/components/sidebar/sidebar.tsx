@@ -1,5 +1,12 @@
 import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
+import {
+  Box,
+  Select,
+  Button,
+  Text,
+} from 'grommet';
+
 import { StoreType } from '../../models/app/store';
 import { apiEntitiesFetchAfterChoose } from '../../store/api/entities/services';
 import { LoadStatus } from '../../models/utils/utils';
@@ -20,10 +27,6 @@ type DispatchProps = {
 
 type Props = StoreProps & DispatchProps;
 
-const createOption = (option: string, index: number): ReactElement => (
-  <option key={index} value={option}>{ option }</option>
-);
-
 const SidebarComponent = ({
   datasources,
   entityNames,
@@ -32,10 +35,12 @@ const SidebarComponent = ({
   clickHandler,
 }: Props): ReactElement => {
   const [datasource, setDatasource] = useState('');
+  const [fetchStatus, setFetchStatus] = useState(false);
 
-  const changeHandler = (event: React.ChangeEvent<HTMLSelectElement>): void => {
-    const selectedSource = event.target.value;
+  const changeHandler = (option: string): void => {
+    const selectedSource = option;
     setDatasource(selectedSource);
+    setFetchStatus(true);
   };
 
   const renderEntities = (names: string[]): ReactElement[] => (
@@ -47,34 +52,47 @@ const SidebarComponent = ({
   const renderChildren = (status: LoadStatus, names: string[], message: string): ReactElement => {
     if (status === 'SUCCESS') {
       return (
-        <div>
+        <Box
+          fill="horizontal"
+          direction="row"
+          align="start"
+          justify="center"
+        >
           { renderEntities(names) }
-        </div>
+        </Box>
       );
     }
 
     return (
-      <div>
-        <p>{ message }</p>
-      </div>
+      <Text textAlign="center">{ message }</Text>
     );
   };
 
   return (
-    <div>
-      <select
-        onChange={(event: React.ChangeEvent<HTMLSelectElement>): void => changeHandler(event)}
-      >
-        <option selected disabled> Choose a database</option>
-        {
-          datasources.map(createOption)
-        }
-      </select>
-      <button type="button" onClick={(): void => clickHandler(datasource)}> Fetch </button>
+    <Box
+      fill="horizontal"
+      direction="column"
+      height="medium"
+      align="center"
+      justify="center"
+    >
+      <Select
+        onChange={({ option }): void => changeHandler(option)}
+        emptySearchMessage="There are no databases configured."
+        options={datasources}
+      />
+      <Button
+        primary
+        disabled={!fetchStatus}
+        size="large"
+        label="Fetch"
+        margin="small"
+        onClick={(): void => clickHandler(datasource)}
+      />
       {
         renderChildren(entitiesLoadStatus, entityNames, entitiesLoadMessage)
       }
-    </div>
+    </Box>
   );
 };
 
