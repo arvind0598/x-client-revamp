@@ -6,7 +6,7 @@ import {
   Text,
   Button,
 } from 'grommet';
-import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
+import { Draggable, DraggableProvided, Droppable, DroppableProvided } from 'react-beautiful-dnd';
 
 import { FieldType } from '../../models/app/fields';
 import { LoadStatus } from '../../models/utils/utils';
@@ -15,7 +15,7 @@ import { selectFieldsFromChildren } from '../../selectors/entities';
 import { selectFieldsLoadStatus, selectFieldsLoadMessage } from '../../selectors/fields';
 import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
-import { createKey, createDraggableId } from '../../utils/methods';
+import { createKey, createDraggableId, createDroppableId } from '../../utils/methods';
 
 type StoreProps = {
   fields: FieldType[];
@@ -35,17 +35,27 @@ type DispatchProps = {
 type Props = StoreProps & DispatchProps & OwnProps;
 
 const renderFields = (fields: FieldType[], parentName: string): ReactElement => (
-  <Box
-    direction="column"
-    justify="center"
-    align="center"
-  >
+  <Droppable droppableId={createDroppableId(parentName)} direction="vertical">
     {
-      fields.map(({ name, type }) => (
-        <Field name={name} type={type} key={createKey(parentName, name)} />
-      ))
+      (provided: DroppableProvided): ReactElement => (
+        <Box
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          direction="column"
+          justify="center"
+          align="center"
+        >
+          {
+            fields.map(({ name, type }, index) => (
+              <Field name={name} type={type} fullName={createKey(parentName, name)} key={createKey(parentName, name)} index={index} />
+            ))
+          }
+          { provided.placeholder }
+        </Box>
+      )
     }
-  </Box>
+  </Droppable>
+
 );
 
 // eslint-disable-next-line max-len
