@@ -1,11 +1,15 @@
 import { DropResult } from 'react-beautiful-dnd';
 import { getDroppable } from '../../utils/methods';
 import { SIDEBAR_TYPE, WORKSPACE_TYPE } from '../../utils/constants';
-import { dragEntityInSidebar, dragEntityInWorkspace, dragEntityFromSidebarToWorkspace, dragEntityFromWorkspaceToSidebar } from './dispatchers';
+import {
+  dragEntityInSidebar,
+  dragEntityInWorkspace,
+  dragEntityFromSidebarToWorkspace,
+  dragEntityFromWorkspaceToSidebar,
+} from './dispatchers';
 
 // eslint-disable-next-line import/prefer-default-export
 export const handleDragEnd = (result: DropResult) => (dispatch: Function): void => {
-  console.log(result);
   const source = getDroppable(result.source.droppableId);
   if (!result.destination) return;
 

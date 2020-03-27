@@ -70,7 +70,6 @@ export const dragEntitiesReducer = (
       };
     }
     case 'DRAG_ENTITY_IN_WORKSPACE': {
-      const { sourceIndex, destIndex } = action;
       const newEntities = getNewEntitiesForIntraMove(state, WORKSPACE_TYPE, action);
       return {
         ...state,
@@ -78,7 +77,6 @@ export const dragEntitiesReducer = (
       };
     }
     case 'DRAG_ENTITY_FROM_SIDEBAR_TO_WORKSPACE': {
-      const { sourceIndex, destIndex } = action;
       const newEntities = getNewEntitiesForInterMove(state, SIDEBAR_TYPE, WORKSPACE_TYPE, action);
       return {
         ...state,
@@ -86,7 +84,6 @@ export const dragEntitiesReducer = (
       };
     }
     case 'DRAG_ENTITY_FROM_WORKSPACE_TO_SIDEBAR': {
-      const { sourceIndex, destIndex } = action;
       const newEntities = getNewEntitiesForInterMove(state, WORKSPACE_TYPE, SIDEBAR_TYPE, action);
       return {
         ...state,
