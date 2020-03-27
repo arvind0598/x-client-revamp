@@ -2,7 +2,10 @@ import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Box } from 'grommet';
 import { StoreType } from '../../models/app/store';
-import { selectEntityNames } from '../../selectors/entities';
+import { selectEntityNames, selectWorkspaceEntityNames } from '../../selectors/entities';
+import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import { WORKSPACE_TYPE } from '../../utils/constants';
+import Entity from '../entity/entity';
 
 type StoreProps = {
   entityNames: string[];
@@ -15,36 +18,38 @@ type DispatchProps = {
 
 type Props = StoreProps & DispatchProps;
 
-const renderEntityName = (entityName: string): ReactElement => (
-  <Box
-    background="light-1"
-    elevation="small"
-    height="xxsmall"
-    margin="small"
-    pad="small"
-    justify="center"
-    align="center"
-  >
-    {entityName}
-  </Box>
+const renderEntities = (entityNames: string[]): ReactElement[] => (
+  entityNames.map((name, index) => (
+    <Entity name={name} key={name} index={index} />
+  ))
 );
 
 const WorkspaceComponent = ({ entityNames }: Props): ReactElement => (
-  <Box
-    background="light-2"
-    direction="row"
-    elevation="xsmall"
-    fill="horizontal"
-    height="medium"
-  >
+  <Droppable droppableId={WORKSPACE_TYPE}>
     {
-      entityNames.map((entityName) => renderEntityName(entityName))
+      (provided: DroppableProvided): ReactElement => (
+        <Box
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          background="light-2"
+          direction="row"
+          elevation="xsmall"
+          fill="vertical"
+          width="50%"
+        >
+          {
+            renderEntities(entityNames)
+          }
+          { provided.placeholder }
+        </Box>
+      )
     }
-  </Box>
+  </Droppable>
+
 );
 
 const mapStateToProps = (state: StoreType): StoreProps => ({
-  entityNames: selectEntityNames(state),
+  entityNames: selectWorkspaceEntityNames(state),
   fieldNames: [],
 });
 

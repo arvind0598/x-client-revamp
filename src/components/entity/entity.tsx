@@ -36,7 +36,7 @@ type Props = StoreProps & DispatchProps & OwnProps;
 
 const renderFields = (fields: FieldType[], parentName: string): ReactElement => (
   <Box
-    direction="row"
+    direction="column"
     justify="center"
     align="center"
   >
@@ -86,7 +86,7 @@ const EntityComponent = ({
           background="light-1"
           elevation="small"
           margin="small"
-          pad="small"
+          pad="medium"
           justify="center"
           align="center"
         >

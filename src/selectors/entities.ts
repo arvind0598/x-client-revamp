@@ -2,7 +2,7 @@ import { StoreType } from '../models/app/store';
 import { EntityType } from '../models/app/entities';
 import { LoadStatus } from '../models/utils/utils';
 import { FieldType } from '../models/app/fields';
-import { WORKSPACE_TYPE } from '../utils/constants';
+import { WORKSPACE_TYPE, SIDEBAR_TYPE } from '../utils/constants';
 
 export const selectEntityLoadStatus = (state: StoreType): LoadStatus => (
   state.entitiesData.entitiesLoadStatus
@@ -20,17 +20,19 @@ export const selectEntityNames = (state: StoreType): string[] => (
   state.entitiesData.entities.map((entity) => (entity.name))
 );
 
-export const selectEntityByName = (state: StoreType, entityName: string): EntityType => {
-  const entityIndex = state.entitiesData.entities.findIndex((entity) => (
+export const selectEntityIndexByName = (state: StoreType, entityName: string): number => (
+  state.entitiesData.entities.findIndex((entity) => (
     entity.name === entityName
-  ));
+  ))
+);
+
+export const selectEntityByName = (state: StoreType, entityName: string): EntityType => {
+  const entityIndex = selectEntityIndexByName(state, entityName);
   return state.entitiesData.entities[entityIndex];
 };
 
 export const selectFieldsFromChildren = (state: StoreType, entityName: string): FieldType[] => {
-  const entityIndex = state.entitiesData.entities.findIndex(
-    (entity) => (entity.name === entityName),
-  );
+  const entityIndex = selectEntityIndexByName(state, entityName);
   const { children } = state.entitiesData.entities[entityIndex];
   const childFields = children.filter((child) => (child.type === 'FIELD')).map((field) => (field.name));
   const fields = state.fieldsData.fields.filter((field) => (
@@ -39,8 +41,18 @@ export const selectFieldsFromChildren = (state: StoreType, entityName: string): 
   return fields;
 };
 
-export const getSidebarEntityNames = (state: StoreType): string[] => (
+export const selectWorkspaceEntityNames = (state: StoreType): string[] => (
   state.entitiesData.entities
     .filter((entity) => (entity.parentName === WORKSPACE_TYPE))
+    .map((entity) => (entity.name))
+);
+
+export const selectSidebarEntities = (state: StoreType): EntityType[] => (
+  state.entitiesData.entities
+    .filter((entity) => (entity.parentName === SIDEBAR_TYPE))
+);
+
+export const selectSidebarEntityNames = (state: StoreType): string[] => (
+  selectSidebarEntities(state)
     .map((entity) => (entity.name))
 );

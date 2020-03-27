@@ -12,7 +12,9 @@ import { StoreType } from '../../models/app/store';
 import { apiEntitiesFetchAfterChoose } from '../../store/api/entities/services';
 import { LoadStatus } from '../../models/utils/utils';
 import Entity from '../entity/entity';
-import { selectEntityNames, selectEntityLoadStatus, selectEntitiesLoadMessage } from '../../selectors/entities';
+import {
+  selectEntityNames, selectEntityLoadStatus, selectEntitiesLoadMessage, selectSidebarEntityNames,
+} from '../../selectors/entities';
 import { selectDatasourceNames } from '../../selectors/datasources';
 import { SIDEBAR_TYPE } from '../../utils/constants';
 
@@ -54,14 +56,23 @@ const SidebarComponent = ({
   const renderChildren = (status: LoadStatus, names: string[], message: string): ReactElement => {
     if (status === 'SUCCESS') {
       return (
-        <Box
-          fill="horizontal"
-          direction="row"
-          align="start"
-          justify="center"
-        >
-          { renderEntities(names) }
-        </Box>
+        <Droppable droppableId={SIDEBAR_TYPE}>
+          {
+            (provided: DroppableProvided): ReactElement => (
+              <Box
+                ref={provided.innerRef}
+                {...provided.droppableProps}
+                fill="horizontal"
+                direction="row"
+                align="start"
+                justify="center"
+              >
+                { renderEntities(names) }
+                { provided.placeholder }
+              </Box>
+            )
+          }
+        </Droppable>
       );
     }
 
@@ -71,43 +82,31 @@ const SidebarComponent = ({
   };
 
   return (
-    <Droppable droppableId={SIDEBAR_TYPE}>
+    <Box
+      fill="vertical"
+      direction="column"
+      width="50%"
+      align="center"
+      justify="center"
+      wrap
+    >
+      <Select
+        onChange={({ option }): void => changeHandler(option)}
+        emptySearchMessage="There are no databases configured."
+        options={datasources}
+      />
+      <Button
+        primary
+        disabled={!fetchStatus}
+        size="large"
+        label="Fetch"
+        margin="small"
+        onClick={(): void => clickHandler(datasource)}
+      />
       {
-        (provided: DroppableProvided): ReactElement => (
-          <Box
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            fill="horizontal"
-            direction="column"
-            height="medium"
-            align="center"
-            justify="center"
-          >
-            <Select
-              onChange={({ option }): void => changeHandler(option)}
-              emptySearchMessage="There are no databases configured."
-              options={datasources}
-            />
-            <Button
-              primary
-              disabled={!fetchStatus}
-              size="large"
-              label="Fetch"
-              margin="small"
-              onClick={(): void => clickHandler(datasource)}
-            />
-            {
-              renderChildren(entitiesLoadStatus, entityNames, entitiesLoadMessage)
-            }
-            {
-              provided.placeholder
-            }
-          </Box>
-        )
+        renderChildren(entitiesLoadStatus, entityNames, entitiesLoadMessage)
       }
-
-    </Droppable>
-
+    </Box>
   );
 };
 
@@ -115,7 +114,7 @@ const mapStateToProps = (state: StoreType): StoreProps => ({
   datasources: selectDatasourceNames(state),
   entitiesLoadStatus: selectEntityLoadStatus(state),
   entitiesLoadMessage: selectEntitiesLoadMessage(state),
-  entityNames: selectEntityNames(state),
+  entityNames: selectSidebarEntityNames(state),
 });
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
