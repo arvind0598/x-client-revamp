@@ -57,6 +57,7 @@
             {
                 "allow": "none"
             }
-        ]
+        ],
+        "react/jsx-props-no-spreading": 0
     }
 }

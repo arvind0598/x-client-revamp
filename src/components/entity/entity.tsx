@@ -1,6 +1,13 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
-import { Box, Heading, Text, Button } from 'grommet';
+import {
+  Box,
+  Heading,
+  Text,
+  Button,
+} from 'grommet';
+import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
+
 import { FieldType } from '../../models/app/fields';
 import { LoadStatus } from '../../models/utils/utils';
 import { StoreType } from '../../models/app/store';
@@ -8,7 +15,7 @@ import { selectFieldsFromChildren } from '../../selectors/entities';
 import { selectFieldsLoadStatus, selectFieldsLoadMessage } from '../../selectors/fields';
 import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
-import { Draggable, DroppableProvided, DraggableProvided } from 'react-beautiful-dnd';
+import { createKey, createDraggableId } from '../../utils/methods';
 
 type StoreProps = {
   fields: FieldType[];
@@ -26,8 +33,6 @@ type DispatchProps = {
 };
 
 type Props = StoreProps & DispatchProps & OwnProps;
-
-const createKey = (parentName: string, fieldName: string): string => (`${parentName}.${fieldName}`);
 
 const renderFields = (fields: FieldType[], parentName: string): ReactElement => (
   <Box
@@ -71,7 +76,7 @@ const EntityComponent = ({
   loadStatus,
   index,
 }: Props): ReactElement => (
-  <Draggable draggableId={`DRAG!${name}`} index={index} isDragDisabled={loadStatus !== 'SUCCESS'}>
+  <Draggable draggableId={createDraggableId(name)} index={index} isDragDisabled={loadStatus !== 'SUCCESS'}>
     {
       (provided: DraggableProvided): ReactElement => (
         <Box
