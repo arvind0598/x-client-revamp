@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 import { Box } from 'grommet';
-import { StoreType } from '../../models/app/store';
-import { selectEntityNames, selectWorkspaceEntityNames } from '../../selectors/entities';
 import { Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import { StoreType } from '../../models/app/store';
+import { selectWorkspaceEntityNames } from '../../selectors/entities';
 import { WORKSPACE_TYPE } from '../../utils/constants';
 import Entity from '../entity/entity';
 
@@ -25,7 +25,7 @@ const renderEntities = (entityNames: string[]): ReactElement[] => (
 );
 
 const WorkspaceComponent = ({ entityNames }: Props): ReactElement => (
-  <Droppable droppableId={WORKSPACE_TYPE}>
+  <Droppable droppableId={WORKSPACE_TYPE} direction="horizontal">
     {
       (provided: DroppableProvided): ReactElement => (
         <Box
@@ -35,7 +35,9 @@ const WorkspaceComponent = ({ entityNames }: Props): ReactElement => (
           direction="row"
           elevation="xsmall"
           fill="vertical"
-          width="50%"
+          justify="start"
+          align="start"
+          width="60%"
         >
           {
             renderEntities(entityNames)

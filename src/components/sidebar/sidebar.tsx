@@ -13,7 +13,7 @@ import { apiEntitiesFetchAfterChoose } from '../../store/api/entities/services';
 import { LoadStatus } from '../../models/utils/utils';
 import Entity from '../entity/entity';
 import {
-  selectEntityNames, selectEntityLoadStatus, selectEntitiesLoadMessage, selectSidebarEntityNames,
+  selectEntityLoadStatus, selectEntitiesLoadMessage, selectSidebarEntityNames,
 } from '../../selectors/entities';
 import { selectDatasourceNames } from '../../selectors/datasources';
 import { SIDEBAR_TYPE } from '../../utils/constants';
@@ -56,13 +56,14 @@ const SidebarComponent = ({
   const renderChildren = (status: LoadStatus, names: string[], message: string): ReactElement => {
     if (status === 'SUCCESS') {
       return (
-        <Droppable droppableId={SIDEBAR_TYPE}>
+        <Droppable droppableId={SIDEBAR_TYPE} direction="horizontal">
           {
             (provided: DroppableProvided): ReactElement => (
               <Box
                 ref={provided.innerRef}
                 {...provided.droppableProps}
                 fill="horizontal"
+                height="80%"
                 direction="row"
                 align="start"
                 justify="center"
@@ -85,24 +86,31 @@ const SidebarComponent = ({
     <Box
       fill="vertical"
       direction="column"
-      width="50%"
+      width="40%"
       align="center"
       justify="center"
       wrap
     >
-      <Select
-        onChange={({ option }): void => changeHandler(option)}
-        emptySearchMessage="There are no databases configured."
-        options={datasources}
-      />
-      <Button
-        primary
-        disabled={!fetchStatus}
-        size="large"
-        label="Fetch"
-        margin="small"
-        onClick={(): void => clickHandler(datasource)}
-      />
+      <Box
+        height="20%"
+        align="center"
+        justify="center"
+      >
+        <Select
+          onChange={({ option }): void => changeHandler(option)}
+          emptySearchMessage="There are no databases configured."
+          options={datasources}
+        />
+        <Button
+          primary
+          disabled={!fetchStatus}
+          size="large"
+          label="Fetch"
+          margin="small"
+          onClick={(): void => clickHandler(datasource)}
+        />
+      </Box>
+
       {
         renderChildren(entitiesLoadStatus, entityNames, entitiesLoadMessage)
       }

@@ -1,6 +1,8 @@
 import {
   DRAG_ENTITY_IN_SIDEBAR,
   DRAG_ENTITY_IN_WORKSPACE,
+  DRAG_ENTITY_FROM_SIDEBAR_TO_WORKSPACE,
+  DRAG_ENTITY_FROM_WORKSPACE_TO_SIDEBAR,
 } from './types';
 
 type Indices = {
@@ -28,5 +30,27 @@ export const dragEntityInWorkspace = (sourceIndex: number, destIndex: number): D
   destIndex,
 });
 
-export type dragEntityAction = DragEntityInSidebarAction
-| DragEntityInWorkspaceAction;
+type DragEntityFromSidebarToWorkspaceAction = Indices & {
+  type: typeof DRAG_ENTITY_FROM_SIDEBAR_TO_WORKSPACE;
+}
+// eslint-disable-next-line max-len
+export const dragEntityFromSidebarToWorkspace = (sourceIndex: number, destIndex: number): DragEntityFromSidebarToWorkspaceAction => ({
+  type: DRAG_ENTITY_FROM_SIDEBAR_TO_WORKSPACE,
+  sourceIndex,
+  destIndex,
+});
+
+type DragEntityFromWorkspaceToSidebarAction = Indices & {
+  type: typeof DRAG_ENTITY_FROM_WORKSPACE_TO_SIDEBAR;
+}
+// eslint-disable-next-line max-len
+export const dragEntityFromWorkspaceToSidebar = (sourceIndex: number, destIndex: number): DragEntityFromWorkspaceToSidebarAction => ({
+  type: DRAG_ENTITY_FROM_WORKSPACE_TO_SIDEBAR,
+  sourceIndex,
+  destIndex,
+});
+
+export type DragEntityAction = DragEntityInSidebarAction
+| DragEntityInWorkspaceAction
+| DragEntityFromSidebarToWorkspaceAction
+| DragEntityFromWorkspaceToSidebarAction;
