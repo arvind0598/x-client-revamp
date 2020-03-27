@@ -86,9 +86,10 @@ const EntityComponent = ({
           background="light-1"
           elevation="small"
           margin="small"
-          pad="medium"
+          pad="small"
           justify="center"
           align="center"
+          width="small"
         >
           <Heading
             level={3}
