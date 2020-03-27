@@ -6,7 +6,12 @@ import {
   Text,
   Button,
 } from 'grommet';
-import { Draggable, DraggableProvided, Droppable, DroppableProvided } from 'react-beautiful-dnd';
+import {
+  Draggable,
+  DraggableProvided,
+  Droppable,
+  DroppableProvided,
+} from 'react-beautiful-dnd';
 
 import { FieldType } from '../../models/app/fields';
 import { LoadStatus } from '../../models/utils/utils';
@@ -47,7 +52,13 @@ const renderFields = (fields: FieldType[], parentName: string): ReactElement => 
         >
           {
             fields.map(({ name, type }, index) => (
-              <Field name={name} type={type} fullName={createKey(parentName, name)} key={createKey(parentName, name)} index={index} />
+              <Field
+                name={name}
+                type={type}
+                index={index}
+                fullName={createKey(parentName, name)}
+                key={createKey(parentName, name)}
+              />
             ))
           }
           { provided.placeholder }

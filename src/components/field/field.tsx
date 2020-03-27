@@ -13,7 +13,12 @@ type OwnProps = {
 
 type Props = OwnProps;
 
-const FieldComponent = ({ name, type, fullName, index }: Props): ReactElement => (
+const FieldComponent = ({
+  name,
+  type,
+  fullName,
+  index,
+}: Props): ReactElement => (
   <Draggable draggableId={createDraggableId(fullName)} index={index}>
     {
       (provided: DraggableProvided): ReactElement => (
