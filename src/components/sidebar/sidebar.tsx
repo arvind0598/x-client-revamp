@@ -49,7 +49,12 @@ const SidebarComponent = ({
 
   const renderEntities = (names: string[]): ReactElement[] => (
     names.map((name, index) => (
-      <Entity name={name} key={name} index={index} />
+      <Entity
+        name={name}
+        parent={SIDEBAR_TYPE}
+        key={name}
+        index={index}
+      />
     ))
   );
 

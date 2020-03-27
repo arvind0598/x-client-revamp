@@ -20,7 +20,13 @@ type Props = StoreProps & DispatchProps;
 
 const renderEntities = (entityNames: string[]): ReactElement[] => (
   entityNames.map((name, index) => (
-    <Entity name={name} key={name} index={index} />
+    <Entity
+      showConfig
+      parent={WORKSPACE_TYPE}
+      name={name}
+      key={name}
+      index={index}
+    />
   ))
 );
 

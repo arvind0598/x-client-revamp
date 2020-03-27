@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist && rm -rf .cache",
     "start": "npm run clean && parcel src/index.html",
-    "build": "npm run clean && parcel build src/index.html",
+    "build": "npm run clean && parcel build src/index.html --no-source-maps --no-content-hash",
     "lint": "eslint . --ext ts --ext tsx",
     "lintfix": "eslint . --ext ts --ext tsx --fix"
   },
@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "grommet": "^2.11.2",
+    "grommet-icons": "^4.4.0",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",

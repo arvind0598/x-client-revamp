@@ -21,6 +21,9 @@ import { selectFieldsLoadStatus, selectFieldsLoadMessage } from '../../selectors
 import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
 import { createKey, createDraggableId, createDroppableId } from '../../utils/methods';
+import { WORKSPACE_TYPE } from '../../utils/constants';
+import { dragEntityFromWorkspaceToSidebar } from '../../store/drag/dispatchers';
+import { renderConfig } from '../../utils/elements';
 
 type StoreProps = {
   fields: FieldType[];
@@ -30,11 +33,14 @@ type StoreProps = {
 
 type OwnProps = {
   name: string;
+  parent: string;
   index: number;
+  showConfig?: boolean;
 };
 
 type DispatchProps = {
   clickHandler: Function;
+  removeFromWorkspace: Function;
 };
 
 type Props = StoreProps & DispatchProps & OwnProps;
@@ -96,6 +102,8 @@ const EntityComponent = ({
   loadMessage,
   loadStatus,
   index,
+  showConfig,
+  removeFromWorkspace,
 }: Props): ReactElement => (
   <Draggable draggableId={createDraggableId(name)} index={index} isDragDisabled={loadStatus !== 'SUCCESS'}>
     {
@@ -122,6 +130,9 @@ const EntityComponent = ({
           {
             renderChildren(name, loadStatus, fields, loadMessage, clickHandler)
           }
+          {
+            showConfig ? renderConfig(() => {}, removeFromWorkspace) : null
+          }
         </Box>
       )
     }
@@ -137,6 +148,14 @@ const mapStateToProps = (state: StoreType, ownProps: Props): StoreProps => ({
 
 const mapDispatchToProps = (dispatch: Function, ownProps: Props): DispatchProps => ({
   clickHandler: (): void => dispatch(apiFieldsFetch(ownProps.name)),
+  removeFromWorkspace: (): void => {
+    if (ownProps.parent === WORKSPACE_TYPE) {
+      dispatch(dragEntityFromWorkspaceToSidebar(ownProps.index, 0));
+    }
+    else {
+      console.log('unsupported');
+    }
+  },
 });
 
 const Entity = connect(mapStateToProps, mapDispatchToProps)(EntityComponent);
