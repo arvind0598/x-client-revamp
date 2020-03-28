@@ -2,8 +2,10 @@ import { ApiDatabaseAction } from './dispatchers';
 import { DatabaseSliceType } from '../../../models/app/store';
 import defaultStore from './default-store';
 
-// eslint-disable-next-line max-len
-const apiDatabaseReducer = (state: DatabaseSliceType = defaultStore, action: ApiDatabaseAction): DatabaseSliceType => {
+const apiDatabaseReducer = (
+  state: DatabaseSliceType = defaultStore,
+  action: ApiDatabaseAction,
+): DatabaseSliceType => {
   switch (action.type) {
     case 'API_DATABASE_FETCH_START': {
       return {

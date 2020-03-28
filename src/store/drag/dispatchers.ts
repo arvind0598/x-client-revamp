@@ -13,8 +13,10 @@ type Indices = {
 type DragEntityInSidebarAction = Indices & {
   type: typeof DRAG_ENTITY_IN_SIDEBAR;
 };
-// eslint-disable-next-line max-len
-export const dragEntityInSidebar = (sourceIndex: number, destIndex: number): DragEntityInSidebarAction => ({
+export const dragEntityInSidebar = (
+  sourceIndex: number,
+  destIndex: number,
+): DragEntityInSidebarAction => ({
   type: DRAG_ENTITY_IN_SIDEBAR,
   sourceIndex,
   destIndex,
@@ -23,8 +25,10 @@ export const dragEntityInSidebar = (sourceIndex: number, destIndex: number): Dra
 type DragEntityInWorkspaceAction = Indices & {
   type: typeof DRAG_ENTITY_IN_WORKSPACE;
 };
-// eslint-disable-next-line max-len
-export const dragEntityInWorkspace = (sourceIndex: number, destIndex: number): DragEntityInWorkspaceAction => ({
+export const dragEntityInWorkspace = (
+  sourceIndex: number,
+  destIndex: number,
+): DragEntityInWorkspaceAction => ({
   type: DRAG_ENTITY_IN_WORKSPACE,
   sourceIndex,
   destIndex,
@@ -33,8 +37,10 @@ export const dragEntityInWorkspace = (sourceIndex: number, destIndex: number): D
 type DragEntityFromSidebarToWorkspaceAction = Indices & {
   type: typeof DRAG_ENTITY_FROM_SIDEBAR_TO_WORKSPACE;
 }
-// eslint-disable-next-line max-len
-export const dragEntityFromSidebarToWorkspace = (sourceIndex: number, destIndex: number): DragEntityFromSidebarToWorkspaceAction => ({
+export const dragEntityFromSidebarToWorkspace = (
+  sourceIndex: number,
+  destIndex: number,
+): DragEntityFromSidebarToWorkspaceAction => ({
   type: DRAG_ENTITY_FROM_SIDEBAR_TO_WORKSPACE,
   sourceIndex,
   destIndex,
@@ -43,8 +49,10 @@ export const dragEntityFromSidebarToWorkspace = (sourceIndex: number, destIndex:
 type DragEntityFromWorkspaceToSidebarAction = Indices & {
   type: typeof DRAG_ENTITY_FROM_WORKSPACE_TO_SIDEBAR;
 }
-// eslint-disable-next-line max-len
-export const dragEntityFromWorkspaceToSidebar = (sourceIndex: number, destIndex: number): DragEntityFromWorkspaceToSidebarAction => ({
+export const dragEntityFromWorkspaceToSidebar = (
+  sourceIndex: number,
+  destIndex: number,
+): DragEntityFromWorkspaceToSidebarAction => ({
   type: DRAG_ENTITY_FROM_WORKSPACE_TO_SIDEBAR,
   sourceIndex,
   destIndex,

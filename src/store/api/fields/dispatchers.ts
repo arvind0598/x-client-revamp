@@ -5,7 +5,9 @@ type ApiFieldsFetchStartAction = {
   type: typeof API_FIELDS_FETCH_START;
   entityName: string;
 };
-export const apiFieldsFetchStart = (entityName: string): ApiFieldsFetchStartAction => ({
+export const apiFieldsFetchStart = (
+  entityName: string,
+): ApiFieldsFetchStartAction => ({
   type: API_FIELDS_FETCH_START,
   entityName,
 });
@@ -15,8 +17,10 @@ type ApiFieldsFetchSuccessAction = {
   entityName: string;
   data: FieldType[];
 }
-// eslint-disable-next-line max-len
-export const apiFieldsFetchSuccess = (entityName: string, data: FieldType[]): ApiFieldsFetchSuccessAction => ({
+export const apiFieldsFetchSuccess = (
+  entityName: string,
+  data: FieldType[],
+): ApiFieldsFetchSuccessAction => ({
   type: API_FIELDS_FETCH_SUCCESS,
   entityName,
   data,
@@ -27,8 +31,10 @@ type ApiFieldsFetchErrorAction = {
   entityName: string;
   error: string;
 };
-// eslint-disable-next-line max-len
-export const apiFieldsFetchError = (entityName: string, error: string): ApiFieldsFetchErrorAction => ({
+export const apiFieldsFetchError = (
+  entityName: string,
+  error: string,
+): ApiFieldsFetchErrorAction => ({
   type: API_FIELDS_FETCH_ERROR,
   entityName,
   error,

@@ -17,6 +17,11 @@ export type EntityType = {
   fieldsLoadMessage: string;
 };
 
+export type RelatedEntityType = {
+  entity: EntityType;
+  relationName: string;
+};
+
 export type EntitiesSliceType = {
   entities: EntityType[];
   entitiesLoadStatus: LoadStatus;

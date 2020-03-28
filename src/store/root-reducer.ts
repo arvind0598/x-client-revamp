@@ -4,7 +4,7 @@ import datasourceReducer from './api/database/reducers';
 import apiEntitiesReducer from './api/entities/reducers';
 import apiFieldsReducer from './api/fields/reducers';
 import { dragEntitiesReducer } from './drag/reducers';
-import { apiRelationsReducer } from './api/relations/reducers';
+import { apiRelationsReducer, relationsReducer } from './api/relations/reducers';
 
 const rootReducer = combineReducers({
   datasourceData: datasourceReducer,
@@ -13,4 +13,6 @@ const rootReducer = combineReducers({
   relationsData: apiRelationsReducer,
 });
 
-export default rootReducer;
+const reducedRootReducer = reduceReducers(rootReducer, relationsReducer);
+
+export default reducedRootReducer;

@@ -2,6 +2,7 @@ import {
   API_RELATIONS_FETCH_START,
   API_RELATIONS_FETCH_SUCCESS,
   API_RELATIONS_FETCH_ERROR,
+  RELATIONS_SETUP,
 } from './types';
 import { RelationsResponseModel } from '../../../models/api/relations';
 
@@ -38,6 +39,19 @@ export const apiRelationsFetchError = (
   error,
 });
 
+type RelationsSetupAction = {
+  type: typeof RELATIONS_SETUP;
+  entityName: string;
+};
+export const relationsSetup = (
+  entityName: string,
+): RelationsSetupAction => ({
+  type: RELATIONS_SETUP,
+  entityName,
+});
+
 export type ApiRelationsAction = ApiRelationsFetchStartAction
 | ApiRelationsFetchSuccessAction
 | ApiRelationsFetchErrorAction;
+
+export type RelationsAction = RelationsSetupAction;

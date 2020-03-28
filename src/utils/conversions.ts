@@ -1,7 +1,6 @@
-import { Child } from '../models/app/entities';
+import { Child, RelatedEntityType } from '../models/app/entities';
 import { FieldResponseModel } from '../models/api/fields';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getChildrenFromFields = (
   parentName: string,
   fields: FieldResponseModel[],
@@ -12,5 +11,18 @@ export const getChildrenFromFields = (
     actualParent: parentName,
     currentParent: parentName,
     relationName: null,
+  }))
+);
+
+export const getChildrenFromRelatedEntities = (
+  relatedEntities: RelatedEntityType[],
+  parentName: string,
+): Child[] => (
+  relatedEntities.map((relatedEntity): Child => ({
+    type: 'ENTITY',
+    name: relatedEntity.entity.name,
+    actualParent: null,
+    currentParent: relatedEntity.entity.parentName,
+    relationName: relatedEntity.relationName,
   }))
 );

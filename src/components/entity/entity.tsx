@@ -41,6 +41,7 @@ type OwnProps = {
 type DispatchProps = {
   clickHandler: Function;
   removeFromWorkspace: Function;
+  showConfigMenu: Function;
 };
 
 type Props = StoreProps & DispatchProps & OwnProps;
@@ -104,6 +105,7 @@ const EntityComponent = ({
   index,
   showConfig,
   removeFromWorkspace,
+  showConfigMenu,
 }: Props): ReactElement => (
   <Draggable draggableId={createDraggableId(name)} index={index} isDragDisabled={loadStatus !== 'SUCCESS'}>
     {
@@ -131,7 +133,7 @@ const EntityComponent = ({
             renderChildren(name, loadStatus, fields, loadMessage, clickHandler)
           }
           {
-            showConfig ? renderConfig(() => {}, removeFromWorkspace) : null
+            showConfig ? renderConfig(showConfigMenu, removeFromWorkspace) : null
           }
         </Box>
       )
@@ -156,6 +158,7 @@ const mapDispatchToProps = (dispatch: Function, ownProps: Props): DispatchProps 
       console.log('unsupported');
     }
   },
+  showConfigMenu: (): void => console.log('unsupported'),
 });
 
 const Entity = connect(mapStateToProps, mapDispatchToProps)(EntityComponent);

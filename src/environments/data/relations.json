@@ -4,20 +4,21 @@
   "data": [
     {
       "name": "dept",
-      "objectRelations": [
+      "arrayRelations": [
         {
-          "relationName": "emp",
-          "sourceColumn": "id"
+          "relationName": "emps",
+          "destTable": "emp",
+          "destColumn": "deptid"
         }
       ]
+
     },
     {
       "name": "emp",
-      "arrayRelations": [
+      "objectRelations": [
         {
-          "relationName": "depts",
-          "destTable": "dept",
-          "destColumn": "id"
+          "relationName": "dept",
+          "sourceColumn": "deptid"
         }
       ]
     }
