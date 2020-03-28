@@ -1,0 +1,25 @@
+{
+  "success": true,
+  "message": "Successfully fetched.",
+  "data": [
+    {
+      "name": "dept",
+      "objectRelations": [
+        {
+          "relationName": "emp",
+          "sourceColumn": "id"
+        }
+      ]
+    },
+    {
+      "name": "emp",
+      "arrayRelations": [
+        {
+          "relationName": "depts",
+          "destTable": "dept",
+          "destColumn": "id"
+        }
+      ]
+    }
+  ]
+}

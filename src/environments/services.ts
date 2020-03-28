@@ -3,9 +3,11 @@ import * as routes from './routes';
 import { Mode } from '../models/utils/utils';
 import { EntitiesResponse } from '../models/api/entities';
 import { FieldsResponse, FieldResponseModel } from '../models/api/fields';
+import { RelationsResponse } from '../models/api/relations';
 
 import baseResponse from './data/base-response.json';
 import databases from './data/databases.json';
+import relations from './data/relations.json';
 import entities from './data/entities.json';
 import fields from './data/fields.json';
 
@@ -36,6 +38,12 @@ export const fetchEntities = (datasource: string): Promise<EntitiesResponse> => 
   resolveIfDev(entities)
     .then((data) => data as EntitiesResponse)
     .catch(() => fetchData(routes.getEntitiesRoute(datasource)) as Promise<EntitiesResponse>)
+);
+
+export const fetchRelations = (datasource: string): Promise<RelationsResponse> => (
+  resolveIfDev(relations)
+    .then((data) => data as RelationsResponse)
+    .catch(() => fetchData(routes.getRelationshipsRoute(datasource)) as Promise<RelationsResponse>)
 );
 
 const getFieldsForEntity = (entity: string): FieldResponseModel[] => (

@@ -9,6 +9,7 @@ import { fetchEntities } from '../../../environments/services';
 import { EntitiesResponse } from '../../../models/api/entities';
 import { EntityType } from '../../../models/app/entities';
 import { SIDEBAR_TYPE } from '../../../utils/constants';
+import { apiRelationsFetch } from '../relations/services';
 
 const makeEntities = (entityNames: string[]): EntityType[] => (
   entityNames.map((entityName: string): EntityType => ({
@@ -31,6 +32,7 @@ export const apiEntitiesFetchAfterChoose = (source: string) => (dispatch: Functi
       if (response.success) {
         const entitiesData = makeEntities(response.data);
         dispatch(apiEntitiesFetchSuccess(entitiesData));
+        dispatch(apiRelationsFetch(source));
       }
       else throw new Error(response.message);
     })

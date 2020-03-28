@@ -5,6 +5,7 @@ export type Child = {
   name: string;
   actualParent: string | null;
   currentParent: string | null;
+  relationName: string | null;
 };
 
 export type EntityType = {

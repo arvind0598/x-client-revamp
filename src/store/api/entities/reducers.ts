@@ -5,8 +5,10 @@ import { ApiEntitiesAction } from './dispatchers';
 import { ApiFieldsAction } from '../fields/dispatchers';
 import { getChildrenFromFields } from '../../../utils/conversions';
 
-// eslint-disable-next-line max-len
-export const apiEntitiesReducer = (state: EntitiesSliceType = defaultStore, action: ApiEntitiesAction): EntitiesSliceType => {
+export const apiEntitiesReducer = (
+  state: EntitiesSliceType = defaultStore,
+  action: ApiEntitiesAction,
+): EntitiesSliceType => {
   switch (action.type) {
     case 'API_ENTITIES_FETCH_START': {
       return {
@@ -39,12 +41,17 @@ export const apiEntitiesReducer = (state: EntitiesSliceType = defaultStore, acti
   }
 };
 
-const findEntityIndexByName = (entities: EntityType[], entityName: string): number => (
+const findEntityIndexByName = (
+  entities: EntityType[],
+  entityName: string,
+): number => (
   entities.findIndex((entity) => (entity.name === entityName))
 );
 
-// eslint-disable-next-line max-len
-export const apiFieldsEntityReducer = (state: EntitiesSliceType = defaultStore, action: ApiFieldsAction): EntitiesSliceType => {
+export const apiFieldsEntityReducer = (
+  state: EntitiesSliceType = defaultStore,
+  action: ApiFieldsAction,
+): EntitiesSliceType => {
   switch (action.type) {
     case 'API_FIELDS_FETCH_START': {
       const newEntities = [...state.entities];

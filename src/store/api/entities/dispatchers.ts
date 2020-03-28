@@ -9,7 +9,8 @@ import { EntityType } from '../../../models/app/entities';
 type ApiEntitiesFetchStartAction = {
   type: typeof API_ENTITIES_FETCH_START;
 };
-export const apiEntitiesFetchStart = (): ApiEntitiesFetchStartAction => ({
+export const apiEntitiesFetchStart = (
+): ApiEntitiesFetchStartAction => ({
   type: API_ENTITIES_FETCH_START,
 });
 
@@ -17,7 +18,9 @@ type ApiEntitiesFetchSuccessAction = {
   type: typeof API_ENTITIES_FETCH_SUCCESS;
   data: EntityType[];
 };
-export const apiEntitiesFetchSuccess = (data: EntityType[]): ApiEntitiesFetchSuccessAction => ({
+export const apiEntitiesFetchSuccess = (
+  data: EntityType[],
+): ApiEntitiesFetchSuccessAction => ({
   type: API_ENTITIES_FETCH_SUCCESS,
   data,
 });
@@ -26,7 +29,9 @@ type ApiEntitiesFetchErrorAction = {
   type: typeof API_ENTITIES_FETCH_ERROR;
   error: string;
 };
-export const apiEntitiesFetchError = (error: string): ApiEntitiesFetchErrorAction => ({
+export const apiEntitiesFetchError = (
+  error: string,
+): ApiEntitiesFetchErrorAction => ({
   type: API_ENTITIES_FETCH_ERROR,
   error,
 });
@@ -34,7 +39,8 @@ export const apiEntitiesFetchError = (error: string): ApiEntitiesFetchErrorActio
 type ApiEntitiesClearAction = {
   type: typeof API_ENTITIES_CLEAR;
 };
-export const apiEntitiesClear = (): ApiEntitiesClearAction => ({
+export const apiEntitiesClear = (
+): ApiEntitiesClearAction => ({
   type: API_ENTITIES_CLEAR,
 });
 
