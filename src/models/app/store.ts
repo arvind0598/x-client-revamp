@@ -2,6 +2,7 @@ import { LoadStatus } from '../utils/utils';
 import { EntitiesSliceType } from './entities';
 import { FieldsSliceType } from './fields';
 import { RelationsResponseModel } from '../api/relations';
+import { ModalSliceType } from './modal';
 
 export type DatabaseSliceType = {
   datasources: string[];
@@ -21,4 +22,5 @@ export type StoreType = {
   entitiesData: EntitiesSliceType;
   fieldsData: FieldsSliceType;
   relationsData: RelationsSliceType;
+  modalData: ModalSliceType;
 };

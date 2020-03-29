@@ -4,9 +4,11 @@ import thunk from 'redux-thunk';
 import rootReducer from './root-reducer';
 import { StoreType } from '../models/app/store';
 import apiStore from './api/default-store';
+import modalStore from './modal/default-store';
 
 const defaultStore: StoreType = {
   ...apiStore,
+  modalData: modalStore,
 };
 
 const middlewares = [

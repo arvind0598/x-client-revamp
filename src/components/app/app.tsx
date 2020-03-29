@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Grommet, ThemeType, Box } from 'grommet';
 import Sidebar from '../sidebar/sidebar';
 import Workspace from '../workspace/workspace';
+import Config from '../config/config';
 
 const theme: ThemeType = {
   global: {
@@ -20,6 +21,7 @@ const AppComponent = (): ReactElement => (
       <Sidebar />
       <Workspace />
     </Box>
+    <Config />
   </Grommet>
 );
 

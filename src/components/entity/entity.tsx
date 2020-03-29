@@ -24,6 +24,7 @@ import { createKey, createDraggableId, createDroppableId } from '../../utils/met
 import { WORKSPACE_TYPE } from '../../utils/constants';
 import { dragEntityFromWorkspaceToSidebar } from '../../store/drag/entities/dispatchers';
 import { renderConfig } from '../../utils/elements';
+import { modalConfigOpen } from '../../store/modal/dispatchers';
 
 type StoreProps = {
   fields: FieldType[];
@@ -157,7 +158,14 @@ const mapDispatchToProps = (dispatch: Function, ownProps: Props): DispatchProps 
       console.log('unsupported');
     }
   },
-  showConfigMenu: (): void => console.log('unsupported'),
+  showConfigMenu: (): void => {
+    if (ownProps.parent === WORKSPACE_TYPE) {
+      dispatch(modalConfigOpen(ownProps.name));
+    }
+    else {
+      console.log('unsupported');
+    }
+  },
 });
 
 const Entity = connect(mapStateToProps, mapDispatchToProps)(EntityComponent);
