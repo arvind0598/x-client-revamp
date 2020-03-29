@@ -1,6 +1,6 @@
-import { EntitiesSliceType, EntityType } from '../../models/app/entities';
+import { EntitiesSliceType, EntityType } from '../../../models/app/entities';
 import { DragEntityAction } from './dispatchers';
-import { SIDEBAR_TYPE, WORKSPACE_TYPE } from '../../utils/constants';
+import { SIDEBAR_TYPE, WORKSPACE_TYPE } from '../../../utils/constants';
 
 const selectChildEntitiesFromSlice = (
   state: EntitiesSliceType,

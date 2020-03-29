@@ -22,7 +22,7 @@ import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
 import { createKey, createDraggableId, createDroppableId } from '../../utils/methods';
 import { WORKSPACE_TYPE } from '../../utils/constants';
-import { dragEntityFromWorkspaceToSidebar } from '../../store/drag/dispatchers';
+import { dragEntityFromWorkspaceToSidebar } from '../../store/drag/entities/dispatchers';
 import { renderConfig } from '../../utils/elements';
 
 type StoreProps = {
@@ -73,7 +73,6 @@ const renderFields = (fields: FieldType[], parentName: string): ReactElement => 
       )
     }
   </Droppable>
-
 );
 
 // eslint-disable-next-line max-len
@@ -107,7 +106,7 @@ const EntityComponent = ({
   removeFromWorkspace,
   showConfigMenu,
 }: Props): ReactElement => (
-  <Draggable draggableId={createDraggableId(name)} index={index} isDragDisabled={loadStatus !== 'SUCCESS'}>
+  <Draggable draggableId={createDraggableId(name, 'ENTITY')} index={index} isDragDisabled={loadStatus !== 'SUCCESS'}>
     {
       (provided: DraggableProvided): ReactElement => (
         <Box

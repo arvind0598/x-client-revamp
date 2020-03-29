@@ -19,7 +19,7 @@ const FieldComponent = ({
   fullName,
   index,
 }: Props): ReactElement => (
-  <Draggable draggableId={createDraggableId(fullName)} index={index}>
+  <Draggable draggableId={createDraggableId(fullName, 'FIELD')} index={index}>
     {
       (provided: DraggableProvided): ReactElement => (
         <Box

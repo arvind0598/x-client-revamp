@@ -6,7 +6,7 @@ import {
   dragEntityInWorkspace,
   dragEntityFromSidebarToWorkspace,
   dragEntityFromWorkspaceToSidebar,
-} from './dispatchers';
+} from './entities/dispatchers';
 
 // eslint-disable-next-line import/prefer-default-export
 export const handleDragEnd = (result: DropResult) => (dispatch: Function): void => {
@@ -34,5 +34,7 @@ export const handleDragEnd = (result: DropResult) => (dispatch: Function): void 
       dispatch(dragEntityInWorkspace(sourceIndex, destIndex));
     }
   }
-  else console.log(result);
+  else {
+    console.log('unsupported');
+  }
 };
