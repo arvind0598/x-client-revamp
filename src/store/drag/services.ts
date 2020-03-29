@@ -6,9 +6,12 @@ import {
   dragEntityInWorkspace,
   dragEntityFromSidebarToWorkspace,
   dragEntityFromWorkspaceToSidebar,
-} from './entities/dispatchers';
+} from './basic/dispatchers';
+import { BasicDragEntitiesActionType } from './basic/types';
+import { NestedDragEntitiesActionType } from './nested/types';
 
-// eslint-disable-next-line import/prefer-default-export
+export type DragEntitiesActionType = BasicDragEntitiesActionType & NestedDragEntitiesActionType;
+
 export const handleDragEnd = (result: DropResult) => (dispatch: Function): void => {
   const source = getDroppable(result.source.droppableId);
   if (!result.destination) return;

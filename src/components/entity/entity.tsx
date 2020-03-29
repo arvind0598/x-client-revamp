@@ -22,7 +22,7 @@ import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
 import { createKey, createDraggableId, createDroppableId } from '../../utils/methods';
 import { WORKSPACE_TYPE } from '../../utils/constants';
-import { dragEntityFromWorkspaceToSidebar } from '../../store/drag/entities/dispatchers';
+import { dragEntityFromWorkspaceToSidebar } from '../../store/drag/basic/dispatchers';
 import { renderConfig } from '../../utils/elements';
 import { modalConfigOpen } from '../../store/modal/dispatchers';
 
