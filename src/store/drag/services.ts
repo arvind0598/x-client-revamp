@@ -7,7 +7,12 @@ import {
   dragEntityFromSidebarToWorkspace,
   dragEntityFromWorkspaceToSidebar,
 } from './basic/dispatchers';
-import { dragEntityFromSidebarToEntity, dragEntityFromEntityToSidebar, dragEntityFromWorkspaceToEntity, dragEntityFromEntityToWorkspace } from './nested/dispatchers';
+import {
+  dragEntityFromSidebarToEntity,
+  dragEntityFromEntityToSidebar,
+  dragEntityFromWorkspaceToEntity,
+  dragEntityFromEntityToWorkspace,
+} from './nested/dispatchers';
 
 // eslint-disable-next-line import/prefer-default-export
 export const handleDragEnd = (result: DropResult) => (dispatch: Function): void => {

@@ -12,7 +12,7 @@ const makeFields = (responses: FieldResponseModel[], entityName: string): FieldT
   }))
 );
 
-/* eslint-disable import/prefer-default-export */
+// eslint-disable-next-line import/prefer-default-export
 export const apiFieldsFetch = (entityName: string) => (dispatch: Function): void => {
   dispatch(apiFieldsFetchStart(entityName));
   fetchFields(entityName)

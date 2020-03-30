@@ -2,8 +2,10 @@ import { FieldsSliceType } from '../../../models/app/fields';
 import defaultStore from './default-store';
 import { ApiFieldsAction } from './dispatchers';
 
-// eslint-disable-next-line max-len
-const apiFieldsReducer = (state: FieldsSliceType = defaultStore, action: ApiFieldsAction): FieldsSliceType => {
+const apiFieldsReducer = (
+  state: FieldsSliceType = defaultStore,
+  action: ApiFieldsAction,
+): FieldsSliceType => {
   switch (action.type) {
     case 'API_FIELDS_FETCH_START': {
       return state;
