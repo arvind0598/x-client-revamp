@@ -1,9 +1,8 @@
-/* eslint-disable import/prefer-default-export */
-
 import { apiDatabaseFetchStart, apiDatabaseFetchSuccess, apiDatabaseFetchError } from './dispatchers';
 import { fetchSources } from '../../../environments/services';
 import { DatabasesResponse } from '../../../models/api/databases';
 
+// eslint-disable-next-line import/prefer-default-export
 export const apiDatabaseFetch = () => (dispatch: Function): void => {
   dispatch(apiDatabaseFetchStart());
   fetchSources()

@@ -5,6 +5,7 @@ import {
   RELATIONS_SETUP,
 } from './types';
 import { RelationsResponseModel } from '../../../models/api/relations';
+import { API_ENTITIES_CLEAR } from '../entities/types';
 
 type ApiRelationsFetchStartAction = {
   type: typeof API_RELATIONS_FETCH_START;
@@ -50,8 +51,17 @@ export const relationsSetup = (
   entityName,
 });
 
+type RelationsClearAction = {
+  type: typeof API_ENTITIES_CLEAR;
+};
+export const relationsClear = (
+): RelationsClearAction => ({
+  type: API_ENTITIES_CLEAR,
+});
+
 export type ApiRelationsAction = ApiRelationsFetchStartAction
 | ApiRelationsFetchSuccessAction
-| ApiRelationsFetchErrorAction;
+| ApiRelationsFetchErrorAction
+| RelationsClearAction;
 
 export type RelationsAction = RelationsSetupAction;

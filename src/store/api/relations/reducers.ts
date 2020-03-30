@@ -33,6 +33,9 @@ export const apiRelationsReducer = (
         relationsLoadMessage: error,
       };
     }
+    case 'API_ENTITIES_CLEAR': {
+      return defaultStore;
+    }
     default: {
       return state;
     }

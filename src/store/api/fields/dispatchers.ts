@@ -1,5 +1,6 @@
 import { API_FIELDS_FETCH_START, API_FIELDS_FETCH_SUCCESS, API_FIELDS_FETCH_ERROR } from './types';
 import { FieldType } from '../../../models/app/fields';
+import { API_ENTITIES_CLEAR } from '../entities/types';
 
 type ApiFieldsFetchStartAction = {
   type: typeof API_FIELDS_FETCH_START;
@@ -40,6 +41,15 @@ export const apiFieldsFetchError = (
   error,
 });
 
+type ApiFieldsClearAction = {
+  type: typeof API_ENTITIES_CLEAR;
+};
+export const apiFieldsClear = (
+): ApiFieldsClearAction => ({
+  type: API_ENTITIES_CLEAR,
+});
+
 export type ApiFieldsAction = ApiFieldsFetchStartAction
 | ApiFieldsFetchSuccessAction
-| ApiFieldsFetchErrorAction;
+| ApiFieldsFetchErrorAction
+| ApiFieldsClearAction;

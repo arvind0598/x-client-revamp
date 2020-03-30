@@ -23,6 +23,9 @@ const apiFieldsReducer = (
     case 'API_FIELDS_FETCH_ERROR': {
       return state;
     }
+    case 'API_ENTITIES_CLEAR': {
+      return defaultStore;
+    }
     default: {
       return state;
     }
