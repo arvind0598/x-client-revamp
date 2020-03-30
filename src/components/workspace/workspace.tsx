@@ -44,7 +44,8 @@ const WorkspaceComponent = ({ entityNames }: Props): ReactElement => (
           justify="start"
           align="start"
           width="60%"
-          overflow="auto"
+          overflow={{ vertical: 'auto', horizontal: 'hidden' }}
+          wrap
         >
           {
             renderEntities(entityNames)

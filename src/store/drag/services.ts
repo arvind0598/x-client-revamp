@@ -7,7 +7,7 @@ import {
   dragEntityFromSidebarToWorkspace,
   dragEntityFromWorkspaceToSidebar,
 } from './basic/dispatchers';
-import { dragEntityFromSidebarToEntity } from './nested/dispatchers';
+import { dragEntityFromSidebarToEntity, dragEntityFromEntityToSidebar, dragEntityFromWorkspaceToEntity, dragEntityFromEntityToWorkspace } from './nested/dispatchers';
 
 // eslint-disable-next-line import/prefer-default-export
 export const handleDragEnd = (result: DropResult) => (dispatch: Function): void => {
@@ -27,7 +27,6 @@ export const handleDragEnd = (result: DropResult) => (dispatch: Function): void 
       dispatch(dragEntityFromSidebarToWorkspace(sourceIndex, destIndex));
     }
     else {
-      console.log(result);
       const destEntity = result.destination.droppableId;
       const draggedEntity = getDraggableName(result.draggableId);
       dispatch(dragEntityFromSidebarToEntity(sourceIndex, destIndex, destEntity, draggedEntity));
@@ -40,6 +39,21 @@ export const handleDragEnd = (result: DropResult) => (dispatch: Function): void 
     else if (destination === WORKSPACE_TYPE) {
       dispatch(dragEntityInWorkspace(sourceIndex, destIndex));
     }
+    else {
+      const destEntity = result.destination.droppableId;
+      const draggedEntity = getDraggableName(result.draggableId);
+      dispatch(dragEntityFromWorkspaceToEntity(sourceIndex, destIndex, destEntity, draggedEntity));
+    }
+  }
+  else if (destination === SIDEBAR_TYPE) {
+    const sourceEntity = result.source.droppableId;
+    const draggedEntity = getDraggableName(result.draggableId);
+    dispatch(dragEntityFromEntityToSidebar(sourceIndex, destIndex, sourceEntity, draggedEntity));
+  }
+  else if (destination === WORKSPACE_TYPE) {
+    const sourceEntity = result.source.droppableId;
+    const draggedEntity = getDraggableName(result.draggableId);
+    dispatch(dragEntityFromEntityToWorkspace(sourceIndex, destIndex, sourceEntity, draggedEntity));
   }
   else {
     console.log('unsupported');

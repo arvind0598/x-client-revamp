@@ -21,11 +21,12 @@ import { selectFieldsLoadStatus, selectFieldsLoadMessage } from '../../selectors
 import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
 import { createKey, createDraggableId, createDroppableId } from '../../utils/methods';
-import { WORKSPACE_TYPE } from '../../utils/constants';
 import { dragEntityFromWorkspaceToSidebar } from '../../store/drag/basic/dispatchers';
 import { renderConfig } from '../../utils/elements';
 import { modalConfigOpen } from '../../store/modal/dispatchers';
 import { EntityType, Child } from '../../models/app/entities';
+import { WORKSPACE_TYPE } from '../../utils/constants';
+import { dragEntityFromEntityToSidebar } from '../../store/drag/nested/dispatchers';
 
 type StoreProps = {
   children: Child[];
@@ -213,16 +214,11 @@ const mapDispatchToProps = (dispatch: Function, ownProps: Props): DispatchProps 
       dispatch(dragEntityFromWorkspaceToSidebar(ownProps.index, 0));
     }
     else {
-      console.log('unsupported');
+      dispatch(dragEntityFromEntityToSidebar(ownProps.index, 0, ownProps.parent, ownProps.name));
     }
   },
   showConfigMenu: (): void => {
-    if (ownProps.parent === WORKSPACE_TYPE) {
-      dispatch(modalConfigOpen(ownProps.name));
-    }
-    else {
-      console.log('unsupported');
-    }
+    dispatch(modalConfigOpen(ownProps.name));
   },
 });
 
