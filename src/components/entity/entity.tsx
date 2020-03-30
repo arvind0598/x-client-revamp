@@ -105,7 +105,7 @@ const renderChildren = (
             <Box
               ref={provided.innerRef}
               {...provided.droppableProps}
-              direction="column"
+              direction={showConfig ? 'row' : 'column'}
               justify="center"
               align="center"
             >
@@ -168,7 +168,8 @@ const EntityComponent = ({
           pad="small"
           justify="center"
           align="center"
-          width="small"
+          width={showConfig ? 'auto' : 'small'}
+          direction="column"
         >
           <Heading
             level={3}
