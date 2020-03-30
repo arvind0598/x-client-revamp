@@ -94,6 +94,7 @@ const SidebarComponent = ({
       width="40%"
       align="center"
       justify="center"
+      overflow="auto"
     >
       <Box
         height="20%"

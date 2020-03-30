@@ -27,6 +27,7 @@ export const handleDragEnd = (result: DropResult) => (dispatch: Function): void 
       dispatch(dragEntityFromSidebarToWorkspace(sourceIndex, destIndex));
     }
     else {
+      console.log(result);
       const destEntity = result.destination.droppableId;
       const draggedEntity = getDraggableName(result.draggableId);
       dispatch(dragEntityFromSidebarToEntity(sourceIndex, destIndex, destEntity, draggedEntity));

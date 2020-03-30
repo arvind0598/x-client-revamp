@@ -16,7 +16,7 @@ import {
 import { FieldType } from '../../models/app/fields';
 import { LoadStatus } from '../../models/utils/utils';
 import { StoreType } from '../../models/app/store';
-import { selectFieldsFromChildren } from '../../selectors/entities';
+import { selectFieldsFromChildren, selectChildEntities, selectChildren } from '../../selectors/entities';
 import { selectFieldsLoadStatus, selectFieldsLoadMessage } from '../../selectors/fields';
 import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
@@ -25,9 +25,12 @@ import { WORKSPACE_TYPE } from '../../utils/constants';
 import { dragEntityFromWorkspaceToSidebar } from '../../store/drag/basic/dispatchers';
 import { renderConfig } from '../../utils/elements';
 import { modalConfigOpen } from '../../store/modal/dispatchers';
+import { EntityType, Child } from '../../models/app/entities';
 
 type StoreProps = {
+  children: Child[];
   fields: FieldType[];
+  entities: EntityType[];
   loadStatus: LoadStatus;
   loadMessage: string;
 };
@@ -47,39 +50,82 @@ type DispatchProps = {
 
 type Props = StoreProps & DispatchProps & OwnProps;
 
-const renderFields = (fields: FieldType[], parentName: string): ReactElement => (
-  <Droppable droppableId={createDroppableId(parentName)} direction="vertical">
-    {
-      (provided: DroppableProvided): ReactElement => (
-        <Box
-          ref={provided.innerRef}
-          {...provided.droppableProps}
-          direction="column"
-          justify="center"
-          align="center"
-        >
-          {
-            fields.map(({ name, type }, index) => (
-              <Field
-                name={name}
-                type={type}
-                index={index}
-                fullName={createKey(parentName, name)}
-                key={createKey(parentName, name)}
-              />
-            ))
-          }
-          { provided.placeholder }
-        </Box>
-      )
-    }
-  </Droppable>
-);
+const renderField = (
+  child: Child,
+  index: number,
+  fields: FieldType[],
+): ReactElement => {
+  const thisField = fields.filter((field) => (field.name === child.name))[0];
+  const { name, type, actualParent } = thisField;
+  return (
+    <Field
+      name={name}
+      type={type}
+      index={index}
+      fullName={createKey(actualParent, name)}
+      key={createKey(actualParent, name)}
+    />
+  );
+};
 
-// eslint-disable-next-line max-len
-const renderChildren = (name: string, status: LoadStatus, fields: FieldType[], message: string, clickHandler: Function): ReactElement => {
+const renderEntity = (
+  child: Child,
+  index: number,
+  entities: EntityType[],
+  showConfig?: boolean,
+): ReactElement => {
+  const thisEntity = entities.filter((entity) => (entity.name === child.name))[0];
+  const { name, parentName } = thisEntity;
+  return (
+    <Entity
+      name={name}
+      parent={parentName}
+      key={name}
+      index={index}
+      showConfig={showConfig}
+    />
+  );
+};
+
+const renderChildren = (
+  name: string,
+  status: LoadStatus,
+  children: Child[],
+  fields: FieldType[],
+  entities: EntityType[],
+  message: string,
+  clickHandler: Function,
+  showConfig?: boolean,
+): ReactElement => {
   if (status === 'SUCCESS') {
-    return renderFields(fields, name);
+    return (
+      <Droppable droppableId={createDroppableId(name)} direction="vertical">
+        {
+          (provided: DroppableProvided): ReactElement => (
+            <Box
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              direction="column"
+              justify="center"
+              align="center"
+            >
+              {
+                children.map((child, index): ReactElement | null => {
+                  if (child.type === 'FIELD') {
+                    return renderField(child, index, fields);
+                  }
+                  if (child.type === 'ENTITY') {
+                    return renderEntity(child, index, entities, showConfig);
+                  }
+                  return null;
+                })
+              }
+              { provided.placeholder }
+            </Box>
+          )
+        }
+      </Droppable>
+    );
   }
 
   return (
@@ -99,7 +145,9 @@ const renderChildren = (name: string, status: LoadStatus, fields: FieldType[], m
 const EntityComponent = ({
   name,
   clickHandler,
+  children,
   fields,
+  entities,
   loadMessage,
   loadStatus,
   index,
@@ -130,7 +178,14 @@ const EntityComponent = ({
             { name }
           </Heading>
           {
-            renderChildren(name, loadStatus, fields, loadMessage, clickHandler)
+            renderChildren(name,
+              loadStatus,
+              children,
+              fields,
+              entities,
+              loadMessage,
+              clickHandler,
+              showConfig)
           }
           {
             showConfig ? renderConfig(showConfigMenu, removeFromWorkspace) : null
@@ -143,7 +198,9 @@ const EntityComponent = ({
 );
 
 const mapStateToProps = (state: StoreType, ownProps: Props): StoreProps => ({
+  children: selectChildren(state, ownProps.name),
   fields: selectFieldsFromChildren(state, ownProps.name),
+  entities: selectChildEntities(state, ownProps.name),
   loadStatus: selectFieldsLoadStatus(state, ownProps.name),
   loadMessage: selectFieldsLoadMessage(state, ownProps.name),
 });
