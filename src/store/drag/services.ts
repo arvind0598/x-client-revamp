@@ -1,5 +1,5 @@
 import { DropResult } from 'react-beautiful-dnd';
-import { getDroppable } from '../../utils/methods';
+import { getDroppable, getDraggableName } from '../../utils/methods';
 import { SIDEBAR_TYPE, WORKSPACE_TYPE } from '../../utils/constants';
 import {
   dragEntityInSidebar,
@@ -7,11 +7,9 @@ import {
   dragEntityFromSidebarToWorkspace,
   dragEntityFromWorkspaceToSidebar,
 } from './basic/dispatchers';
-import { BasicDragEntitiesActionType } from './basic/types';
-import { NestedDragEntitiesActionType } from './nested/types';
+import { dragEntityFromSidebarToEntity } from './nested/dispatchers';
 
-export type DragEntitiesActionType = BasicDragEntitiesActionType & NestedDragEntitiesActionType;
-
+// eslint-disable-next-line import/prefer-default-export
 export const handleDragEnd = (result: DropResult) => (dispatch: Function): void => {
   const source = getDroppable(result.source.droppableId);
   if (!result.destination) return;
@@ -27,6 +25,11 @@ export const handleDragEnd = (result: DropResult) => (dispatch: Function): void 
     }
     else if (destination === WORKSPACE_TYPE) {
       dispatch(dragEntityFromSidebarToWorkspace(sourceIndex, destIndex));
+    }
+    else {
+      const destEntity = result.destination.droppableId;
+      const draggedEntity = getDraggableName(result.draggableId);
+      dispatch(dragEntityFromSidebarToEntity(sourceIndex, destIndex, destEntity, draggedEntity));
     }
   }
   else if (source === WORKSPACE_TYPE) {

@@ -58,7 +58,7 @@ export const dragEntityFromWorkspaceToSidebar = (
   destIndex,
 });
 
-export type DragEntityAction = DragEntityInSidebarAction
+export type BasicDragEntityAction = DragEntityInSidebarAction
 | DragEntityInWorkspaceAction
 | DragEntityFromSidebarToWorkspaceAction
 | DragEntityFromWorkspaceToSidebarAction;

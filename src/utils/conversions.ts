@@ -14,15 +14,19 @@ export const getChildrenFromFields = (
   }))
 );
 
+export const getChildFromRelatedEntity = (
+  relatedEntity: RelatedEntityType,
+): Child => ({
+  type: 'ENTITY',
+  name: relatedEntity.entity.name,
+  actualParent: null,
+  currentParent: relatedEntity.entity.parentName,
+  relationName: relatedEntity.relationName,
+});
+
 export const getChildrenFromRelatedEntities = (
   relatedEntities: RelatedEntityType[],
   parentName: string,
 ): Child[] => (
-  relatedEntities.map((relatedEntity): Child => ({
-    type: 'ENTITY',
-    name: relatedEntity.entity.name,
-    actualParent: null,
-    currentParent: relatedEntity.entity.parentName,
-    relationName: relatedEntity.relationName,
-  }))
+  relatedEntities.map((relatedEntity) => getChildFromRelatedEntity(relatedEntity))
 );
