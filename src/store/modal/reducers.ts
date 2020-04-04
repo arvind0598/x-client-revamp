@@ -12,6 +12,7 @@ const modalReducer = (
         ...state,
         isOpen: true,
         type: 'CONFIG',
+        entityName: action.entityName,
       };
     }
     case 'MODAL_CONFIG_CLOSE': {

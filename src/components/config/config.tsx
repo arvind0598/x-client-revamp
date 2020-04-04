@@ -3,9 +3,13 @@ import { connect } from 'react-redux';
 import { Layer, Box } from 'grommet';
 import { StoreType } from '../../models/app/store';
 import { modalConfigClose } from '../../store/modal/dispatchers';
+import { FieldType } from '../../models/app/fields';
+import { selectFieldsFromChildren } from '../../selectors/entities';
 
 type StoreProps = {
   isOpen: boolean;
+  entityName: string;
+  fields: FieldType[];
 };
 
 type DispatchProps = {
@@ -17,6 +21,8 @@ type Props = StoreProps & DispatchProps;
 const ConfigComponent = ({
   isOpen,
   closeLayer,
+  entityName,
+  fields,
 }: Props): ReactElement | null => (
   isOpen
     ? (
@@ -28,15 +34,22 @@ const ConfigComponent = ({
         <Box
           pad="large"
         >
-          Hello!
+          Hello {entityName}!
+          {JSON.stringify(fields)}
         </Box>
       </Layer>
     )
     : null
 );
 
+const getChildrenFields = (state: StoreType, entityName: string): FieldType[] => (
+  entityName ? selectFieldsFromChildren(state, entityName) : []
+);
+
 const mapStateToProps = (state: StoreType): StoreProps => ({
   isOpen: state.modalData.isOpen,
+  entityName: state.modalData.entityName,
+  fields: getChildrenFields(state, state.modalData.entityName),
 });
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
