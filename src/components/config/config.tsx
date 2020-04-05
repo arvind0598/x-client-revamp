@@ -64,10 +64,12 @@ const ConfigComponent = ({
   const renderValueTextInput = (
     fieldName: string,
     type: string,
+    value: string | undefined,
     hasOperation: boolean,
   ): ReactElement => (
     <TextInput
       disabled={!hasOperation}
+      value={value}
       onChange={(event): void => changeFieldValue(entityName, fieldName, event.target.value)}
     />
   );
@@ -98,7 +100,7 @@ const ConfigComponent = ({
               </TableCell>
               <TableCell>
                 {
-                  renderValueTextInput(field.name, field.type, !!field.operation)
+                  renderValueTextInput(field.name, field.type, field.value, !!field.operation)
                 }
               </TableCell>
               <TableCell>
