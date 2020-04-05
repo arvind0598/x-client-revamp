@@ -7,6 +7,7 @@ type OwnProps = {
   type: string;
   fullName: string;
   index: number;
+  hasError: boolean;
 };
 
 type Props = OwnProps;
@@ -14,9 +15,10 @@ type Props = OwnProps;
 const FieldComponent = ({
   name,
   type,
+  hasError,
 }: Props): ReactElement => (
   <Box
-    background="light-2"
+    background={hasError ? 'status-error' : 'light-2'}
     elevation="small"
     margin="xsmall"
     pad="medium"

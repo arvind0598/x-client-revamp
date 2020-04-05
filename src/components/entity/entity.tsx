@@ -60,16 +60,24 @@ const renderField = (
   child: Child,
   index: number,
   fields: FieldType[],
+  showError: boolean,
 ): ReactElement | null => {
   const thisField = fields.filter((field) => (field.name === child.name))[0];
   if (!thisField) return null;
-  const { name, type, actualParent } = thisField;
+  const {
+    name,
+    type,
+    actualParent,
+    operation,
+    value,
+  } = thisField;
   return (
     <Field
       name={name}
       type={type}
       index={index}
       fullName={createKey(actualParent, name)}
+      hasError={showError && !!operation && !value}
       key={createKey(actualParent, name)}
     />
   );
@@ -119,7 +127,7 @@ const renderChildren = (
               {
                 children.map((child, index): ReactElement | null => {
                   if (child.type === 'FIELD') {
-                    return renderField(child, index, fields);
+                    return renderField(child, index, fields, !!showConfig);
                   }
                   if (child.type === 'ENTITY') {
                     return renderEntity(child, index, entities, showConfig);

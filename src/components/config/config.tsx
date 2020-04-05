@@ -52,9 +52,10 @@ const ConfigComponent = ({
 }: Props): ReactElement | null => {
   const renderOperationSelectInput = (
     fieldName: string,
+    operation: string | undefined,
   ): ReactElement => (
     <Select
-      value="None"
+      value={operation || 'None'}
       options={['None', ...OPERATION_VALUES]}
       onChange={(event): void => changeFieldOperation(entityName, fieldName, event.option)}
     />
@@ -92,7 +93,7 @@ const ConfigComponent = ({
               <TableCell>{field.type.toLocaleLowerCase()}</TableCell>
               <TableCell>
                 {
-                  renderOperationSelectInput(field.name)
+                  renderOperationSelectInput(field.name, field.operation)
                 }
               </TableCell>
               <TableCell>
