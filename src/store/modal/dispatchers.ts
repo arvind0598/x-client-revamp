@@ -2,7 +2,11 @@ import {
   MODAL_CONFIG_OPEN,
   MODAL_CONFIG_CLOSE,
   FIELD_TOGGLE,
+  FIELD_SET_OPERATION,
+  FIELD_SET_VALUE,
+  FIELD_CLEAR_OPERATION,
 } from './types';
+import { OperationType } from '../../models/utils/utils';
 
 type ModalConfigOpenAction = {
   type: typeof MODAL_CONFIG_OPEN;
@@ -28,10 +32,13 @@ export type ModalConfigAction = ModalConfigOpenAction
 
 export type ModalAction = ModalConfigAction;
 
-type FieldToggleAction = {
-  type: typeof FIELD_TOGGLE;
+type FieldDetails = {
   entityName: string;
   fieldName: string;
+};
+
+type FieldToggleAction = FieldDetails & {
+  type: typeof FIELD_TOGGLE;
 };
 export const fieldToggle = (
   entityName: string,
@@ -42,4 +49,49 @@ export const fieldToggle = (
   fieldName,
 });
 
-export type FieldAction = FieldToggleAction;
+type FieldSetOperationAction = FieldDetails & {
+  type: typeof FIELD_SET_OPERATION;
+  operation: OperationType;
+};
+export const fieldSetOperation = (
+  entityName: string,
+  fieldName: string,
+  operation: OperationType,
+): FieldSetOperationAction => ({
+  type: FIELD_SET_OPERATION,
+  entityName,
+  fieldName,
+  operation,
+});
+
+type FieldClearOperationAction = FieldDetails & {
+  type: typeof FIELD_CLEAR_OPERATION;
+};
+export const fieldClearOperation = (
+  entityName: string,
+  fieldName: string,
+): FieldClearOperationAction => ({
+  type: FIELD_CLEAR_OPERATION,
+  entityName,
+  fieldName,
+});
+
+type FieldSetValueAction = FieldDetails & {
+  type: typeof FIELD_SET_VALUE;
+  value: string;
+};
+export const fieldSetValue = (
+  entityName: string,
+  fieldName: string,
+  value: string,
+): FieldSetValueAction => ({
+  type: FIELD_SET_VALUE,
+  entityName,
+  fieldName,
+  value,
+});
+
+export type FieldAction = FieldToggleAction
+| FieldSetOperationAction
+| FieldClearOperationAction
+| FieldSetValueAction;

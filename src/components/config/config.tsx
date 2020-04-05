@@ -14,9 +14,17 @@ import {
   TextInput,
 } from 'grommet';
 import { StoreType } from '../../models/app/store';
-import { modalConfigClose, fieldToggle } from '../../store/modal/dispatchers';
+import {
+  modalConfigClose,
+  fieldToggle,
+  fieldSetOperation,
+  fieldClearOperation,
+  fieldSetValue,
+} from '../../store/modal/dispatchers';
 import { FieldType } from '../../models/app/fields';
 import { selectFieldsFromChildren } from '../../selectors/fields';
+import { OperationType } from '../../models/utils/utils';
+import { OPERATION_VALUES } from '../../utils/constants';
 
 type StoreProps = {
   isOpen: boolean;
@@ -27,6 +35,8 @@ type StoreProps = {
 type DispatchProps = {
   closeLayer: Function;
   toggleField: Function;
+  changeFieldOperation: Function;
+  changeFieldValue: Function;
 };
 
 type Props = StoreProps & DispatchProps;
@@ -35,9 +45,32 @@ const ConfigComponent = ({
   isOpen,
   closeLayer,
   toggleField,
+  changeFieldOperation,
+  changeFieldValue,
   entityName,
   fields,
 }: Props): ReactElement | null => {
+  const renderOperationSelectInput = (
+    fieldName: string,
+  ): ReactElement => (
+    <Select
+      value="None"
+      options={['None', ...OPERATION_VALUES]}
+      onChange={(event): void => changeFieldOperation(entityName, fieldName, event.option)}
+    />
+  );
+
+  const renderValueTextInput = (
+    fieldName: string,
+    type: string,
+    hasOperation: boolean,
+  ): ReactElement => (
+    <TextInput
+      disabled={!hasOperation}
+      onChange={(event): void => changeFieldValue(entityName, fieldName, event.target.value)}
+    />
+  );
+
   const renderFields = (): ReactElement => (
     <Table margin="large">
       <TableHeader>
@@ -58,12 +91,14 @@ const ConfigComponent = ({
               <TableCell scope="row">{field.name}</TableCell>
               <TableCell>{field.type.toLocaleLowerCase()}</TableCell>
               <TableCell>
-                <Select
-                  options={['<', '>', '=', '<=', '>=']}
-                />
+                {
+                  renderOperationSelectInput(field.name)
+                }
               </TableCell>
               <TableCell>
-                <TextInput />
+                {
+                  renderValueTextInput(field.name, field.type, !!field.operation)
+                }
               </TableCell>
               <TableCell>
                 <CheckBox
@@ -118,10 +153,26 @@ const mapStateToProps = (state: StoreType): StoreProps => ({
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
   closeLayer: (): void => dispatch(modalConfigClose()),
+
   toggleField: (
     entityName: string,
     fieldName: string,
   ): void => dispatch(fieldToggle(entityName, fieldName)),
+
+  changeFieldOperation: (
+    entityName: string,
+    fieldName: string,
+    operation: string,
+  ): void => {
+    if (operation !== 'None') dispatch(fieldSetOperation(entityName, fieldName, operation as OperationType));
+    else dispatch(fieldClearOperation(entityName, fieldName));
+  },
+
+  changeFieldValue: (
+    entityName: string,
+    fieldName: string,
+    value: string,
+  ): void => dispatch(fieldSetValue(entityName, fieldName, value)),
 });
 
 const Config = connect(mapStateToProps, mapDispatchToProps)(ConfigComponent);

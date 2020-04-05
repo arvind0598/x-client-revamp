@@ -1,7 +1,7 @@
 import { ModalSliceType } from '../../models/app/modal';
 import defaultStore from './default-store';
 import { ModalAction, FieldAction } from './dispatchers';
-import { FieldsSliceType } from '../../models/app/fields';
+import { FieldsSliceType, FieldType } from '../../models/app/fields';
 
 export const modalReducer = (
   state: ModalSliceType = defaultStore,
@@ -28,18 +28,50 @@ export const modalReducer = (
   }
 };
 
+const getFieldsAndIndexFromSlice = (
+  state: FieldsSliceType,
+  action: FieldAction,
+): [FieldType[], number] => {
+  const { entityName, fieldName } = action;
+  const newFields = [...state.fields];
+  const thisFieldIndex = newFields.findIndex((field) => (
+    field.name === fieldName && field.currentParent === entityName
+  ));
+  return [newFields, thisFieldIndex];
+};
+
 export const fieldsReducer = (
   state: FieldsSliceType,
   action: FieldAction,
 ): FieldsSliceType => {
   switch (action.type) {
     case 'FIELD_TOGGLE': {
-      const { entityName, fieldName } = action;
-      const thisFieldIndex = state.fields.findIndex((field) => (
-        field.name === fieldName && field.currentParent === entityName
-      ));
-      const newFields = [...state.fields];
+      const [newFields, thisFieldIndex] = getFieldsAndIndexFromSlice(state, action);
       newFields[thisFieldIndex].selected = !newFields[thisFieldIndex].selected;
+      return {
+        ...state,
+        fields: newFields,
+      };
+    }
+    case 'FIELD_SET_OPERATION': {
+      const [newFields, thisFieldIndex] = getFieldsAndIndexFromSlice(state, action);
+      newFields[thisFieldIndex].operation = action.operation;
+      return {
+        ...state,
+        fields: newFields,
+      };
+    }
+    case 'FIELD_CLEAR_OPERATION': {
+      const [newFields, thisFieldIndex] = getFieldsAndIndexFromSlice(state, action);
+      delete newFields[thisFieldIndex].operation;
+      return {
+        ...state,
+        fields: newFields,
+      };
+    }
+    case 'FIELD_SET_VALUE': {
+      const [newFields, thisFieldIndex] = getFieldsAndIndexFromSlice(state, action);
+      newFields[thisFieldIndex].value = action.value;
       return {
         ...state,
         fields: newFields,

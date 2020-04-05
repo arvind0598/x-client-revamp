@@ -4,6 +4,8 @@ export type FieldType = {
   currentParent: string;
   actualParent: string;
   selected: boolean;
+  operation?: string;
+  value?: string;
 };
 
 export type FieldsSliceType = {
