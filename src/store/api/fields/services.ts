@@ -9,6 +9,7 @@ const makeFields = (responses: FieldResponseModel[], entityName: string): FieldT
     ...response,
     actualParent: entityName,
     currentParent: entityName,
+    selected: true,
   }))
 );
 

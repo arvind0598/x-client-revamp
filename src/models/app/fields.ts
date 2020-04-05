@@ -3,6 +3,7 @@ export type FieldType = {
   type: string;
   currentParent: string;
   actualParent: string;
+  selected: boolean;
 };
 
 export type FieldsSliceType = {

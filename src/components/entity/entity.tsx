@@ -16,8 +16,13 @@ import {
 import { FieldType } from '../../models/app/fields';
 import { LoadStatus } from '../../models/utils/utils';
 import { StoreType } from '../../models/app/store';
-import { selectFieldsFromChildren, selectChildEntities, selectChildren } from '../../selectors/entities';
-import { selectFieldsLoadStatus, selectFieldsLoadMessage } from '../../selectors/fields';
+import { selectChildEntities, selectChildren } from '../../selectors/entities';
+import {
+  selectFieldsLoadStatus,
+  selectFieldsLoadMessage,
+  selectFieldsFromChildren,
+  selectVisibleFieldsFromChildren,
+} from '../../selectors/fields';
 import { apiFieldsFetch } from '../../store/api/fields/services';
 import Field from '../field/field';
 import { createKey, createDraggableId, createDroppableId } from '../../utils/methods';
@@ -55,8 +60,9 @@ const renderField = (
   child: Child,
   index: number,
   fields: FieldType[],
-): ReactElement => {
+): ReactElement | null => {
   const thisField = fields.filter((field) => (field.name === child.name))[0];
+  if (!thisField) return null;
   const { name, type, actualParent } = thisField;
   return (
     <Field
@@ -201,7 +207,9 @@ const EntityComponent = ({
 
 const mapStateToProps = (state: StoreType, ownProps: Props): StoreProps => ({
   children: selectChildren(state, ownProps.name),
-  fields: selectFieldsFromChildren(state, ownProps.name),
+  fields: ownProps.showConfig
+    ? selectVisibleFieldsFromChildren(state, ownProps.name)
+    : selectFieldsFromChildren(state, ownProps.name),
   entities: selectChildEntities(state, ownProps.name),
   loadStatus: selectFieldsLoadStatus(state, ownProps.name),
   loadMessage: selectFieldsLoadMessage(state, ownProps.name),

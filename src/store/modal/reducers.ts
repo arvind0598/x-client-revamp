@@ -1,8 +1,9 @@
 import { ModalSliceType } from '../../models/app/modal';
 import defaultStore from './default-store';
-import { ModalAction } from './dispatchers';
+import { ModalAction, FieldAction } from './dispatchers';
+import { FieldsSliceType } from '../../models/app/fields';
 
-const modalReducer = (
+export const modalReducer = (
   state: ModalSliceType = defaultStore,
   action: ModalAction,
 ): ModalSliceType => {
@@ -27,4 +28,25 @@ const modalReducer = (
   }
 };
 
-export default modalReducer;
+export const fieldsReducer = (
+  state: FieldsSliceType,
+  action: FieldAction,
+): FieldsSliceType => {
+  switch (action.type) {
+    case 'FIELD_TOGGLE': {
+      const { entityName, fieldName } = action;
+      const thisFieldIndex = state.fields.findIndex((field) => (
+        field.name === fieldName && field.currentParent === entityName
+      ));
+      const newFields = [...state.fields];
+      newFields[thisFieldIndex].selected = !newFields[thisFieldIndex].selected;
+      return {
+        ...state,
+        fields: newFields,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
