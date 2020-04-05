@@ -5,6 +5,13 @@ import {
   Box,
   Heading,
   CheckBox,
+  Table,
+  TableHeader,
+  TableRow,
+  TableCell,
+  TableBody,
+  Select,
+  TextInput,
 } from 'grommet';
 import { StoreType } from '../../models/app/store';
 import { modalConfigClose, fieldToggle } from '../../store/modal/dispatchers';
@@ -32,29 +39,43 @@ const ConfigComponent = ({
   fields,
 }: Props): ReactElement | null => {
   const renderFields = (): ReactElement => (
-    <Box
-      direction="column"
-      align="end"
-      justify="end"
-      pad="large"
-    >
-      {
-        // eslint-disable-next-line react/prop-types
-        fields.map((field) => (
-          <Box
-            margin="small"
-            key={`${field.currentParent}.${field.name}`}
-          >
-            <CheckBox
-              checked={field.selected}
-              label={field.name}
-              onChange={(): void => toggleField(entityName, field.name)}
-              reverse
-            />
-          </Box>
-        ))
-      }
-    </Box>
+    <Table margin="large">
+      <TableHeader>
+        <TableRow>
+          <TableCell scope="col" border="bottom"> Name </TableCell>
+          <TableCell scope="col" border="bottom"> Type </TableCell>
+          <TableCell scope="col" border="bottom"> Operation </TableCell>
+          <TableCell scope="col" border="bottom"> Value </TableCell>
+          <TableCell scope="col" border="bottom"> Enabled </TableCell>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {
+          fields.map((field) => (
+            <TableRow
+              key={`${field.currentParent}.${field.name}`}
+            >
+              <TableCell scope="row">{field.name}</TableCell>
+              <TableCell>{field.type.toLocaleLowerCase()}</TableCell>
+              <TableCell>
+                <Select
+                  options={['<', '>', '=', '<=', '>=']}
+                />
+              </TableCell>
+              <TableCell>
+                <TextInput />
+              </TableCell>
+              <TableCell>
+                <CheckBox
+                  checked={field.selected}
+                  onChange={(): void => toggleField(entityName, field.name)}
+                />
+              </TableCell>
+            </TableRow>
+          ))
+        }
+      </TableBody>
+    </Table>
   );
 
   return (
