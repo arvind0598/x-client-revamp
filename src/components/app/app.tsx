@@ -1,9 +1,16 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
-import { Grommet, ThemeType, Box } from 'grommet';
+import {
+  Grommet,
+  ThemeType,
+  Box,
+  Stack,
+} from 'grommet';
 import Sidebar from '../sidebar/sidebar';
 import Workspace from '../workspace/workspace';
 import Config from '../config/config';
+import GenerateButton from '../generate/generate';
+import Modal from '../modal/modal';
 
 const theme: ThemeType = {
   global: {
@@ -17,11 +24,15 @@ const theme: ThemeType = {
 
 const AppComponent = (): ReactElement => (
   <Grommet full theme={theme}>
-    <Box fill direction="row">
-      <Sidebar />
-      <Workspace />
-    </Box>
+    <Stack fill anchor="bottom-right">
+      <Box fill direction="row">
+        <Sidebar />
+        <Workspace />
+      </Box>
+      <GenerateButton />
+    </Stack>
     <Config />
+    <Modal />
   </Grommet>
 );
 

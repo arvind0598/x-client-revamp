@@ -149,7 +149,7 @@ const getChildrenFields = (state: StoreType, entityName: string): FieldType[] =>
 );
 
 const mapStateToProps = (state: StoreType): StoreProps => ({
-  isOpen: state.modalData.isOpen,
+  isOpen: state.modalData.isOpen && !!state.modalData.entityName,
   entityName: state.modalData.entityName,
   fields: getChildrenFields(state, state.modalData.entityName),
 });

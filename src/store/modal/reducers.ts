@@ -22,6 +22,19 @@ export const modalReducer = (
         isOpen: false,
       };
     }
+    case 'MODAL_MAIN_OPEN': {
+      const newState = { ...state };
+      delete newState.entityName;
+      newState.isOpen = true;
+      newState.type = 'MAIN';
+      return newState;
+    }
+    case 'MODAL_MAIN_CLOSE': {
+      return {
+        ...state,
+        isOpen: false,
+      };
+    }
     default: {
       return state;
     }

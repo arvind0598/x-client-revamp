@@ -1,4 +1,4 @@
-type ModalType = 'CONFIG' | 'RESPONSE';
+type ModalType = 'CONFIG' | 'MAIN';
 
 export type ModalSliceType = {
   type: ModalType;

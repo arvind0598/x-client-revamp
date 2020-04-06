@@ -5,6 +5,8 @@ import {
   FIELD_SET_OPERATION,
   FIELD_SET_VALUE,
   FIELD_CLEAR_OPERATION,
+  MODAL_MAIN_OPEN,
+  MODAL_MAIN_CLOSE,
 } from './types';
 import { OperationType } from '../../models/utils/utils';
 
@@ -30,7 +32,26 @@ export const modalConfigClose = (
 export type ModalConfigAction = ModalConfigOpenAction
 | ModalConfigCloseAction;
 
-export type ModalAction = ModalConfigAction;
+type ModalMainOpenAction = {
+  type: typeof MODAL_MAIN_OPEN;
+};
+export const modalMainOpen = (
+): ModalMainOpenAction => ({
+  type: MODAL_MAIN_OPEN,
+});
+
+type ModalMainCloseAction = {
+  type: typeof MODAL_MAIN_CLOSE;
+};
+export const modalMainClose = (
+): ModalMainCloseAction => ({
+  type: MODAL_MAIN_CLOSE,
+});
+
+export type ModalMainAction = ModalMainOpenAction
+| ModalMainCloseAction;
+
+export type ModalAction = ModalConfigAction | ModalMainAction;
 
 type FieldDetails = {
   entityName: string;
