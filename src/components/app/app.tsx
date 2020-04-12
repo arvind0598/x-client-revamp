@@ -8,9 +8,10 @@ import {
 } from 'grommet';
 import Sidebar from '../sidebar/sidebar';
 import Workspace from '../workspace/workspace';
-import Config from '../config/config';
-import GenerateButton from '../generate/generate';
-import Modal from '../modal/modal';
+import Config from '../modals/config/config';
+import GenerateButton from '../buttons/generate/generate';
+import Modal from '../modals/modal/modal';
+import NewDatabaseButton from '../buttons/newdb/newdb';
 
 const theme: ThemeType = {
   global: {
@@ -29,7 +30,10 @@ const AppComponent = (): ReactElement => (
         <Sidebar />
         <Workspace />
       </Box>
-      <GenerateButton />
+      <Box direction="row">
+        <NewDatabaseButton />
+        <GenerateButton />
+      </Box>
     </Stack>
     <Config />
     <Modal />

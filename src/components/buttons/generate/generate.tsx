@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import { Button } from 'grommet';
 import { LinkNext } from 'grommet-icons';
 import { connect } from 'react-redux';
-import { modalMainOpen } from '../../store/modal/dispatchers';
-import { StoreType } from '../../models/app/store';
-import { selectWorkspaceEntityNames } from '../../selectors/entities';
+import { modalMainOpen } from '../../../store/modal/dispatchers';
+import { StoreType } from '../../../models/app/store';
+import { selectWorkspaceEntityNames } from '../../../selectors/entities';
 
 type StoreProps = {
   hasWorkspaceEntities: boolean;

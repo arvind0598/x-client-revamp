@@ -2,9 +2,9 @@ import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
 
 import { Layer, Box, Button } from 'grommet';
-import { StoreType } from '../../models/app/store';
-import { modalMainClose } from '../../store/modal/dispatchers';
-import { apiResponseFetch } from '../../store/api/response/services';
+import { StoreType } from '../../../models/app/store';
+import { modalMainClose } from '../../../store/modal/dispatchers';
+import { apiResponseFetch } from '../../../store/api/response/services';
 
 type StoreProps = {
   isOpen: boolean;

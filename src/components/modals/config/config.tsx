@@ -13,18 +13,18 @@ import {
   Select,
   TextInput,
 } from 'grommet';
-import { StoreType } from '../../models/app/store';
+import { StoreType } from '../../../models/app/store';
 import {
   modalConfigClose,
   fieldToggle,
   fieldSetOperation,
   fieldClearOperation,
   fieldSetValue,
-} from '../../store/modal/dispatchers';
-import { FieldType } from '../../models/app/fields';
-import { selectFieldsFromChildren } from '../../selectors/fields';
-import { OperationType } from '../../models/utils/utils';
-import { OPERATION_VALUES } from '../../utils/constants';
+} from '../../../store/modal/dispatchers';
+import { FieldType } from '../../../models/app/fields';
+import { selectFieldsFromChildren } from '../../../selectors/fields';
+import { OperationType } from '../../../models/utils/utils';
+import { OPERATION_VALUES } from '../../../utils/constants';
 
 type StoreProps = {
   isOpen: boolean;
