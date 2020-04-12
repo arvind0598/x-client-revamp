@@ -4,17 +4,26 @@ import { Mode } from '../models/utils/utils';
 import { EntitiesResponse } from '../models/api/entities';
 import { FieldsResponse, FieldResponseModel } from '../models/api/fields';
 import { RelationsResponse } from '../models/api/relations';
+import { ApiRequest, ApiResponse } from '../models/api/response';
 
 import baseResponse from './data/base-response.json';
 import databases from './data/databases.json';
 import relations from './data/relations.json';
 import entities from './data/entities.json';
 import fields from './data/fields.json';
+import api from './data/api.json';
 
 const currentMode: Mode = 'DEV';
 
 const fetchData = (route: string): Promise<unknown> => (
   fetch(route).then((data) => data.json() as unknown)
+);
+
+const postData = (route: string, body: unknown): Promise<unknown> => (
+  fetch(route, {
+    method: 'POST',
+    body: JSON.stringify(body),
+  }).then((data) => data.json() as unknown)
 );
 
 const resolveIfDev = (response: unknown): Promise<unknown> => new Promise(
@@ -63,4 +72,10 @@ export const fetchFields = (entity: string): Promise<FieldsResponse> => (
       return response as FieldsResponse;
     })
     .catch(() => fetchData(routes.getFieldsRoute(entity)) as Promise<FieldsResponse>)
+);
+
+export const fetchApiResult = (data: ApiRequest[]): Promise<ApiResponse> => (
+  resolveIfDev(api)
+    .then((response) => response as ApiResponse)
+    .catch(() => postData(routes.getApiRoute(), data) as Promise<ApiResponse>)
 );
