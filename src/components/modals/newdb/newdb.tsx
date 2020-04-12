@@ -5,16 +5,14 @@ import {
   Box,
   Button,
   Text,
-  Anchor,
 } from 'grommet';
 import { StoreType } from '../../../models/app/store';
-import { modalMainClose } from '../../../store/modal/dispatchers';
+import { modalNewDbClose } from '../../../store/modal/dispatchers';
 import { apiResponseFetch } from '../../../store/api/response/services';
 import { LoadStatus } from '../../../models/utils/utils';
 
 type StoreProps = {
   isOpen: boolean;
-  theEntireState: StoreType;
   loadStatus: LoadStatus;
   responseMessage?: string;
 };
@@ -26,24 +24,17 @@ type DispatchProps = {
 
 type Props = StoreProps & DispatchProps;
 
-const ModalComponent = ({
+const NewDbModalComponent = ({
   isOpen,
   closeLayer,
   clickHandler,
-  theEntireState,
   loadStatus,
-  responseMessage,
 }: Props): ReactElement | null => {
   const renderData = (): ReactElement => {
     if (loadStatus === 'SUCCESS') {
       return (
         <Text>
-          You can visit the API by clicking &nbsp;
-          <Anchor
-            href={responseMessage}
-            label="here"
-          />
-          .
+          Success. You can now select this database from the dropdown.
         </Text>
       );
     }
@@ -51,9 +42,9 @@ const ModalComponent = ({
     return (
       <Button
         primary
-        label="Generate API"
+        label="Add new Database"
         disabled={loadStatus === 'LOADING'}
-        onClick={(): void => clickHandler(theEntireState)}
+        onClick={(): void => clickHandler()}
       />
     );
   };
@@ -80,17 +71,16 @@ const ModalComponent = ({
 };
 
 const mapStateToProps = (state: StoreType): StoreProps => ({
-  isOpen: state.modalData.isOpen && state.modalData.type === 'MAIN',
-  theEntireState: state,
+  isOpen: state.modalData.isOpen && state.modalData.type === 'NEWDB',
   loadStatus: state.modalData.status,
   responseMessage: state.modalData.response,
 });
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
-  closeLayer: (): void => dispatch(modalMainClose()),
+  closeLayer: (): void => dispatch(modalNewDbClose()),
   clickHandler: (store: StoreType): void => dispatch(apiResponseFetch(store)),
 });
 
-const Modal = connect(mapStateToProps, mapDispatchToProps)(ModalComponent);
+const NewDbModal = connect(mapStateToProps, mapDispatchToProps)(NewDbModalComponent);
 
-export default Modal;
+export default NewDbModal;

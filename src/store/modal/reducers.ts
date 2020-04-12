@@ -36,6 +36,19 @@ export const modalReducer = (
       newState.status = 'INIT';
       return newState;
     }
+    case 'MODAL_NEWDB_OPEN': {
+      return {
+        ...state,
+        isOpen: true,
+        type: 'NEWDB',
+      };
+    }
+    case 'MODAL_NEWDB_CLOSE': {
+      return {
+        ...state,
+        isOpen: false,
+      };
+    }
     default: {
       return state;
     }

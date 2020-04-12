@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Button } from 'grommet';
 import { Add } from 'grommet-icons';
 import { connect } from 'react-redux';
-import { modalMainOpen } from '../../../store/modal/dispatchers';
+import { modalNewDbOpen } from '../../../store/modal/dispatchers';
 
 type DispatchProps = {
   clickHandler: Function;
@@ -24,7 +24,7 @@ const NewDatabaseButtonComponent = ({
 );
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
-  clickHandler: (): void => dispatch(modalMainOpen()),
+  clickHandler: (): void => dispatch(modalNewDbOpen()),
 });
 
 const NewDatabaseButton = connect(null, mapDispatchToProps)(NewDatabaseButtonComponent);

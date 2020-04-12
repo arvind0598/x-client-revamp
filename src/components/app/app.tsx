@@ -12,6 +12,7 @@ import Config from '../modals/config/config';
 import GenerateButton from '../buttons/generate/generate';
 import Modal from '../modals/modal/modal';
 import NewDatabaseButton from '../buttons/newdb/newdb';
+import NewDbModal from '../modals/newdb/newdb';
 
 const theme: ThemeType = {
   global: {
@@ -37,6 +38,7 @@ const AppComponent = (): ReactElement => (
     </Stack>
     <Config />
     <Modal />
+    <NewDbModal />
   </Grommet>
 );
 

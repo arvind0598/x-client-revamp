@@ -7,6 +7,8 @@ import {
   FIELD_CLEAR_OPERATION,
   MODAL_MAIN_OPEN,
   MODAL_MAIN_CLOSE,
+  MODAL_NEWDB_OPEN,
+  MODAL_NEWDB_CLOSE,
 } from './types';
 import { OperationType } from '../../models/utils/utils';
 
@@ -51,7 +53,26 @@ export const modalMainClose = (
 export type ModalMainAction = ModalMainOpenAction
 | ModalMainCloseAction;
 
-export type ModalAction = ModalConfigAction | ModalMainAction;
+type ModalNewDbOpenAction = {
+  type: typeof MODAL_NEWDB_OPEN;
+};
+export const modalNewDbOpen = (
+): ModalNewDbOpenAction => ({
+  type: MODAL_NEWDB_OPEN,
+});
+
+type ModalNewDbCloseAction = {
+  type: typeof MODAL_NEWDB_CLOSE;
+};
+export const modalNewDbClose = (
+): ModalNewDbCloseAction => ({
+  type: MODAL_NEWDB_CLOSE,
+});
+
+export type ModalNewDbAction = ModalNewDbOpenAction
+| ModalNewDbCloseAction
+
+export type ModalAction = ModalConfigAction | ModalMainAction | ModalNewDbAction;
 
 type FieldDetails = {
   entityName: string;

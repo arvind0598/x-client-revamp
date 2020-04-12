@@ -1,6 +1,6 @@
 import { LoadStatus } from '../utils/utils';
 
-type ModalType = 'CONFIG' | 'MAIN';
+type ModalType = 'CONFIG' | 'MAIN' | 'NEWDB';
 
 export type ModalSliceType = {
   type: ModalType;

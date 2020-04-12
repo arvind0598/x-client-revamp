@@ -32,7 +32,7 @@ const GenerateButtonComponent = ({
   />
 );
 
-const someFieldsInvalid = (fields: FieldType[]) => (
+const someFieldsInvalid = (fields: FieldType[]): boolean => (
   fields.some((field) => (!!field.operation && !field.value))
 );
 
