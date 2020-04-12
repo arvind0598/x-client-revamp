@@ -16,6 +16,10 @@ export const getRelationshipsRoute = (datasource: string): string => (
   `${BASE_URL}/${datasource}/relations`
 );
 
+export const getNewDbRoute = (): string => (
+  `${BASE_URL}/addsource`
+);
+
 export const getApiRoute = (): string => (
   `${BASE_URL}/generate`
 );

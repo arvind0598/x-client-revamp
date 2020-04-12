@@ -1,15 +1,17 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import { connect } from 'react-redux';
 import {
   Layer,
   Box,
   Button,
   Text,
+  TextInput,
+  Heading,
 } from 'grommet';
 import { StoreType } from '../../../models/app/store';
 import { modalNewDbClose } from '../../../store/modal/dispatchers';
-import { apiResponseFetch } from '../../../store/api/response/services';
 import { LoadStatus } from '../../../models/utils/utils';
+import { apiAddSourceFetch } from '../../../store/api/addsource/services';
 
 type StoreProps = {
   isOpen: boolean;
@@ -30,6 +32,9 @@ const NewDbModalComponent = ({
   clickHandler,
   loadStatus,
 }: Props): ReactElement | null => {
+  const [name, setName] = useState('');
+  const [url, setUrl] = useState('');
+
   const renderData = (): ReactElement => {
     if (loadStatus === 'SUCCESS') {
       return (
@@ -40,12 +45,35 @@ const NewDbModalComponent = ({
     }
 
     return (
-      <Button
-        primary
-        label="Add new Database"
-        disabled={loadStatus === 'LOADING'}
-        onClick={(): void => clickHandler()}
-      />
+      <>
+        <Heading level="3" textAlign="center">
+          Add New Datasource
+        </Heading>
+        <Box margin="xsmall">
+          <TextInput
+            placeholder="Database Name"
+            size="small"
+            value={name}
+            onChange={(event): void => setName(event.target.value)}
+          />
+        </Box>
+        <Box margin="xsmall">
+          <TextInput
+            placeholder="Database URL"
+            size="small"
+            value={url}
+            onChange={(event): void => setUrl(event.target.value)}
+          />
+        </Box>
+        <Button
+          primary
+          size="medium"
+          margin="small"
+          label="Add new Database"
+          disabled={loadStatus === 'LOADING' || !name.length || !url.length}
+          onClick={(): void => clickHandler(name, url)}
+        />
+      </>
     );
   };
 
@@ -59,6 +87,7 @@ const NewDbModalComponent = ({
         >
           <Box
             pad="large"
+            margin=""
           >
             {
               renderData()
@@ -78,7 +107,7 @@ const mapStateToProps = (state: StoreType): StoreProps => ({
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
   closeLayer: (): void => dispatch(modalNewDbClose()),
-  clickHandler: (store: StoreType): void => dispatch(apiResponseFetch(store)),
+  clickHandler: (name: string, url: string): void => dispatch(apiAddSourceFetch(name, url)),
 });
 
 const NewDbModal = connect(mapStateToProps, mapDispatchToProps)(NewDbModalComponent);

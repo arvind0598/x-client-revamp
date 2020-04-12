@@ -12,6 +12,7 @@ import relations from './data/relations.json';
 import entities from './data/entities.json';
 import fields from './data/fields.json';
 import api from './data/api.json';
+import { AddSourceRequest, AddSourceResponse } from '../models/api/addsource';
 
 const currentMode: Mode = 'DEV';
 
@@ -78,4 +79,10 @@ export const fetchApiResult = (data: ApiRequest[]): Promise<ApiResponse> => (
   resolveIfDev(api)
     .then((response) => response as ApiResponse)
     .catch(() => postData(routes.getApiRoute(), data) as Promise<ApiResponse>)
+);
+
+export const fetchAddSourceResult = (data: AddSourceRequest): Promise<AddSourceResponse> => (
+  resolveIfDev(baseResponse)
+    .then((response) => response as AddSourceResponse)
+    .catch(() => postData(routes.getNewDbRoute(), data) as Promise<AddSourceResponse>)
 );
