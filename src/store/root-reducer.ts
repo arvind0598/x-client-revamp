@@ -8,13 +8,14 @@ import { apiRelationsReducer, relationsReducer } from './api/relations/reducers'
 import { modalReducer, fieldsReducer } from './modal/reducers';
 import { nestedDragEntitiesReducer } from './drag/nested/reducers';
 import { apiResponseReducer } from './api/response/reducers';
+import { apiAddSourceReducer } from './api/addsource/reducers';
 
 const rootReducer = combineReducers({
   datasourceData: datasourceReducer,
   entitiesData: reduceReducers(apiEntitiesReducer, dragEntitiesReducer, nestedDragEntitiesReducer),
   fieldsData: reduceReducers(apiFieldsReducer, fieldsReducer),
   relationsData: apiRelationsReducer,
-  modalData: reduceReducers(modalReducer, apiResponseReducer),
+  modalData: reduceReducers(modalReducer, apiResponseReducer, apiAddSourceReducer),
 });
 
 const reducedRootReducer = reduceReducers(rootReducer, relationsReducer);

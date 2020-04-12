@@ -31,6 +31,7 @@ const NewDbModalComponent = ({
   closeLayer,
   clickHandler,
   loadStatus,
+  responseMessage,
 }: Props): ReactElement | null => {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
@@ -38,8 +39,16 @@ const NewDbModalComponent = ({
   const renderData = (): ReactElement => {
     if (loadStatus === 'SUCCESS') {
       return (
-        <Text>
+        <Text textAlign="center">
           Success. You can now select this database from the dropdown.
+        </Text>
+      );
+    }
+
+    if (loadStatus === 'INIT' && !!responseMessage) {
+      return (
+        <Text textAlign="center">
+          { responseMessage }
         </Text>
       );
     }
