@@ -1,14 +1,22 @@
 import React, { ReactElement } from 'react';
 import { connect } from 'react-redux';
-
-import { Layer, Box, Button } from 'grommet';
+import {
+  Layer,
+  Box,
+  Button,
+  Text,
+  Anchor,
+} from 'grommet';
 import { StoreType } from '../../../models/app/store';
 import { modalMainClose } from '../../../store/modal/dispatchers';
 import { apiResponseFetch } from '../../../store/api/response/services';
+import { LoadStatus } from '../../../models/utils/utils';
 
 type StoreProps = {
   isOpen: boolean;
   theEntireState: StoreType;
+  loadStatus: LoadStatus;
+  responseMessage?: string;
 };
 
 type DispatchProps = {
@@ -23,14 +31,32 @@ const ModalComponent = ({
   closeLayer,
   clickHandler,
   theEntireState,
+  loadStatus,
+  responseMessage,
 }: Props): ReactElement | null => {
-  const renderSomething = (): ReactElement => (
-    <Button
-      primary
-      label="Generate API"
-      onClick={(): void => clickHandler(theEntireState)}
-    />
-  );
+  const renderData = (): ReactElement => {
+    if (loadStatus === 'SUCCESS') {
+      return (
+        <Text>
+          You can visit the API by clicking &nbsp;
+          <Anchor
+            href={responseMessage}
+            label="here"
+          />
+          .
+        </Text>
+      );
+    }
+
+    return (
+      <Button
+        primary
+        label="Generate API"
+        disabled={loadStatus === 'LOADING'}
+        onClick={(): void => clickHandler(theEntireState)}
+      />
+    );
+  };
 
   return (
     isOpen
@@ -44,7 +70,7 @@ const ModalComponent = ({
             pad="large"
           >
             {
-              renderSomething()
+              renderData()
             }
           </Box>
         </Layer>
@@ -56,6 +82,8 @@ const ModalComponent = ({
 const mapStateToProps = (state: StoreType): StoreProps => ({
   isOpen: state.modalData.isOpen && !state.modalData.entityName,
   theEntireState: state,
+  loadStatus: state.modalData.status,
+  responseMessage: state.modalData.response,
 });
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({

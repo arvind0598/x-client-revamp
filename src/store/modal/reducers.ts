@@ -30,10 +30,11 @@ export const modalReducer = (
       return newState;
     }
     case 'MODAL_MAIN_CLOSE': {
-      return {
-        ...state,
-        isOpen: false,
-      };
+      const newState = { ...state };
+      delete newState.response;
+      newState.isOpen = false;
+      newState.status = 'INIT';
+      return newState;
     }
     default: {
       return state;
