@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { modalMainOpen } from '../../../store/modal/dispatchers';
 import { StoreType } from '../../../models/app/store';
 import { selectWorkspaceEntityNames } from '../../../selectors/entities';
+import { FieldType } from '../../../models/app/fields';
 
 type StoreProps = {
-  hasWorkspaceEntities: boolean;
+  isButtonEnabled: boolean;
 };
 
 type DispatchProps = {
@@ -18,7 +19,7 @@ type Props = StoreProps & DispatchProps;
 
 const GenerateButtonComponent = ({
   clickHandler,
-  hasWorkspaceEntities,
+  isButtonEnabled,
 }: Props): ReactElement => (
   <Button
     primary
@@ -26,13 +27,18 @@ const GenerateButtonComponent = ({
     size="large"
     gap="large"
     icon={<LinkNext />}
-    disabled={!hasWorkspaceEntities}
+    disabled={!isButtonEnabled}
     onClick={(): void => clickHandler()}
   />
 );
 
+const someFieldsInvalid = (fields: FieldType[]) => (
+  fields.some((field) => (!!field.operation && !field.value))
+);
+
 const mapStateToProps = (state: StoreType): StoreProps => ({
-  hasWorkspaceEntities: selectWorkspaceEntityNames(state).length > 0,
+  isButtonEnabled: selectWorkspaceEntityNames(state).length > 0
+    && !someFieldsInvalid(state.fieldsData.fields),
 });
 
 const mapDispatchToProps = (dispatch: Function): DispatchProps => ({
