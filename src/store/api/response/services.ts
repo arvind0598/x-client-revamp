@@ -30,6 +30,7 @@ const buildRequestFromFields = (
         field: OPERATION_MAP[field.operation as OperationType],
         ...field.value && {
           value: field.value,
+          option: 'where',
         },
       },
     }))

@@ -7,6 +7,7 @@ export type ApiRequest = {
   columnName: string;
   hasParent: boolean;
   hasChildren: boolean;
+  option?: string;
   field?: string;
   value?: string;
 };
