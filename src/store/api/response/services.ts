@@ -44,8 +44,8 @@ const buildRequestFromEntity = (
   const relationsRequestList = childEntities.map((child): ApiRequest => ({
     tableName: entity.name,
     columnName: child.relationName as string,
-    hasParent: true,
-    hasChildren: false,
+    hasParent: !!relationName,
+    hasChildren: true,
   }));
 
   const thisEntityFields = selectVisibleFieldsFromChildren(state, entity.name);

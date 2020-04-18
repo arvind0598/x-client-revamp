@@ -14,7 +14,7 @@ import fields from './data/fields.json';
 import api from './data/api.json';
 import { AddSourceRequest, AddSourceResponse } from '../models/api/addsource';
 
-const currentMode: Mode = 'DEV';
+const currentMode: Mode = 'PROD';
 
 const fetchData = (route: string): Promise<unknown> => (
   fetch(route).then((data) => data.json() as unknown)
@@ -24,6 +24,9 @@ const postData = (route: string, body: unknown): Promise<unknown> => (
   fetch(route, {
     method: 'POST',
     body: JSON.stringify(body),
+    headers: {
+      'Content-Type': 'application/json',
+    },
   }).then((data) => data.json() as unknown)
 );
 

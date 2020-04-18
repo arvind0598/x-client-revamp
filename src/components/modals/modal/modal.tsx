@@ -41,6 +41,7 @@ const ModalComponent = ({
           You can visit the API by clicking &nbsp;
           <Anchor
             href={responseMessage}
+            target="_blank"
             label="here"
           />
           .
