@@ -32,7 +32,9 @@ export const apiEntitiesFetchAfterChoose = (source: string) => (dispatch: Functi
       if (response.success) {
         const entitiesData = makeEntities(response.data);
         dispatch(apiEntitiesFetchSuccess(entitiesData));
-        dispatch(apiRelationsFetch(source));
+        setTimeout(() => {
+          dispatch(apiRelationsFetch(source));
+        }, 1000);
       }
       else throw new Error(response.message);
     })
